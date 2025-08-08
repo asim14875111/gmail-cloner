@@ -1,5 +1,5 @@
 "use client";
-import React, { Component } from "react";
+import React from "react";
 import { TbInbox } from "react-icons/tb";
 import { LuSendHorizontal } from "react-icons/lu";
 import { MdOutlineDrafts } from "react-icons/md";
@@ -139,7 +139,7 @@ export default function Inboxpage() {
       </div>
 
       <div className="flex">
-        <div className=" bg-[#f9fafe] w-fit h-[100vh]">
+        <div className=" bg-[#f9fafe] w-fit h-[90vh]">
           <div className="flex flex-col w-fit  gap-2 pr-4 pt-4 ">
             {sidebarcomponents.map((item: Item, index) => (
               <div
@@ -166,14 +166,14 @@ export default function Inboxpage() {
             </p>
           </div>
         </div>
-        <div>
+        <div className="w-fit">
           {display && (
-            <div>
+            <div className="w-fit">
               {buttonscontent.map(
                 (button: Button, index) =>
                   index === currentIndex && (
-                    <div className="" key={button.id}>
-                      <button>{button.label}</button>
+                    <div className="w-fit" key={button.id}>
+                      <button className="w-fit">{button.label}</button>
                     </div>
                   )
               )}
