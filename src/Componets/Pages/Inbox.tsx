@@ -280,7 +280,6 @@ export default function Inbox() {
   const showdetailssection = () => {
     setIsVisible(true);
   };
-
   const hidedetailssection = () => {
     setIsVisible(false);
   };
