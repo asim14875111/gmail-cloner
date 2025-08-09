@@ -166,14 +166,14 @@ export default function Inboxpage() {
             </p>
           </div>
         </div>
-        <div className="w-fit">
+        <div className="w-full">
           {display && (
-            <div className="w-fit">
+            <div className="w-full">
               {buttonscontent.map(
                 (button: Button, index) =>
                   index === currentIndex && (
-                    <div className="w-fit" key={button.id}>
-                      <button className="w-fit">{button.label}</button>
+                    <div className="w-full" key={button.id}>
+                      <button className="w-full">{button.label}</button>
                     </div>
                   )
               )}

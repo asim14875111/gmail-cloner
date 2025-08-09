@@ -10,7 +10,6 @@ import { FaReplyAll } from "react-icons/fa";
 export default function Inbox() {
   const [visible, setIsVisible] = useState<boolean>(false);
   const [currentIndex, setCurretnIndex] = useState<number>(0);
-  const [inputValue, setInputValue] = useState<string>("");
 
   interface Item {
     id: number;
@@ -108,8 +107,8 @@ export default function Inbox() {
   useEffect(() => {
     const archived = JSON.parse(localStorage.getItem("Data") || "[]");
     const deleted = JSON.parse(localStorage.getItem("Deleted-item") || "[]");
-    const archivedIds = new Set(archived.map((i: any) => i.id));
-    const deletedIds = new Set(deleted.map((i: any) => i.id));
+    const archivedIds = new Set(archived.map((i: Item) => i.id));
+    const deletedIds = new Set(deleted.map((i: Item) => i.id));
 
     setData(
       initialData.filter((i) => !archivedIds.has(i.id) && !deletedIds.has(i.id))
@@ -118,7 +117,7 @@ export default function Inbox() {
 
   const setarchive = (item: Item) => {
     const getdata = JSON.parse(localStorage.getItem("Data") || "[]");
-    const exists = getdata.find((data: any) => data.id === item.id);
+    const exists = getdata.find((data: { id: number }) => data.id === item.id);
     if (!exists)
       getdata.push({
         id: item.id,
@@ -131,7 +130,7 @@ export default function Inbox() {
 
   const setdeleteditem = (item: Item) => {
     const getdata = JSON.parse(localStorage.getItem("Deleted-item") || "[]");
-    const exists = getdata.find((data: any) => data.id === item.id);
+    const exists = getdata.find((data: { id: number }) => data.id === item.id);
     if (!exists)
       getdata.push({
         id: item.id,
@@ -145,7 +144,6 @@ export default function Inbox() {
       console.log("Id is not equal");
       setCurretnIndex(0);
       setIsVisible(false);
-      // setDisplay(false);
     }
   };
   interface Detail {
@@ -284,22 +282,7 @@ export default function Inbox() {
     setIsVisible(false);
   };
 
-  useEffect(() => {
-    const savedvalues = localStorage.getItem("savedinputvalue");
 
-    if (savedvalues) {
-      setInputValue(savedvalues);
-    }
-  }, []);
-
-  const handleInputChange = (event) => {
-    setInputValue(event.target.value);
-  };
-
-  const saveinputvalue = () => {
-    localStorage.setItem("savedinputvalue", inputValue);
-    setInputValue("");
-  };
 
   return (
     <div className="w-full flex flex-row">
@@ -404,14 +387,11 @@ export default function Inbox() {
                           </span>{" "}
                         </p>
                         <div className="flex border py-1 pr-1 rounded-full">
-                          <input
-                            value={inputValue}
-                            onChange={handleInputChange}
+                          <input                   
                             className="border-0 pl-4 outline-none w-full"
                             type="text"
                           />
                           <p
-                            onClick={saveinputvalue}
                             className="bg-black hover:bg-gray-900 cursor-pointer rounded-full px-4 py-1 text-white"
                           >
                             Send
