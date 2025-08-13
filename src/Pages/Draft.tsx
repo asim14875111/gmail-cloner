@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 
 export default function Draft() {
-  const [draft, setDraftEmail] = useState();
-  const [title, setTitle] = useState([]);
+  const [draft, setDraftEmail] = useState<string | null>(null);
+  const [title, setTitle] = useState<string | null>(null);
   const [visible, setIsVisible] = useState(true);
   useEffect(() => {
     const draftmail = localStorage.getItem("draft-email");

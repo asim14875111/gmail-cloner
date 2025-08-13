@@ -22,10 +22,10 @@ export default function Inboxpage() {
   const [display] = React.useState<boolean>(!false);
   const [compose, setCompose] = useState<boolean>(false);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
-  const [inputvalue, setInputValue] = useState([]);
-  const [subjectvalue, setSubjectValue] = useState([]);
-  const myDivref = useRef(null);
-  const [descriptionvalue, setDescriptionValue] = useState([]);
+  const [inputvalue, setInputValue] = useState<string>("");
+  const [subjectvalue, setSubjectValue] = useState<string>("");
+  const myDivref = useRef<HTMLDivElement>(null);
+  const [descriptionvalue, setDescriptionValue] = useState<string>("");
   interface Item {
     id: number;
     icon: React.ReactNode;
@@ -138,8 +138,8 @@ export default function Inboxpage() {
     console.log(event.target.value, "Compose draft description");
   };
 
-  const handleclickoutside = (event) => {
-    if (myDivref.current && !myDivref.current.contains(event.target)) {
+  const handleclickoutside = (event: MouseEvent) => {
+    if (myDivref.current && !myDivref.current.contains(event.target as Node)) {
       setCompose(false);
     }
   };

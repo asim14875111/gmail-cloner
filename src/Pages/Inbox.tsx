@@ -382,7 +382,7 @@ export default function Inbox() {
     localStorage.setItem("title-subject", JSON.stringify(subject));
   };
 
-  const savesentmails = (subject) => {
+  const savesentmails = (subject: string) => {
     // console.log(subject,"title");
 
     const title = JSON.parse(localStorage.getItem("title") || "[]");
