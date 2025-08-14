@@ -435,7 +435,7 @@ export default function Inbox() {
                   setCurrentIndex(item.id);
                   showdetailssection();
                 }}
-                className="flex flex-row items-center hover:bg-gray-100 cursor-pointer gap-4 justify-between rounded-xl bg-gray-50 p-2 border border-gray-200"
+                className="flex flex-row items-center hover:bg-gray-100 cursor-pointer gap-4 justify-start rounded-xl bg-gray-50 p-2 border border-gray-200"
                 key={item.id}
               >
                 <input
