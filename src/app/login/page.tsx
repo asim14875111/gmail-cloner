@@ -1,3 +1,16 @@
+interface AuthError {
+  code: string;
+  message?: string;
+}
+
+function isAuthError(err: unknown): err is AuthError {
+  return (
+    typeof err === "object" &&
+    err !== null &&
+    "code" in err &&
+    typeof (err as { code: unknown }).code === "string"
+  );
+}
 "use client";
 import React, { useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
@@ -26,16 +39,20 @@ export default function Login() {
         router.push("/mail");
       }, 1000);
     } catch (err) {
-      if (err.code === "auth/wrong-password") {
-        toast.error("Wrong password");
-      } else if (err.code === "auth/invalid-email") {
-        toast.error("Couldnot found any email, kindly sign up");
-      } else if (err.code === "auth/user-not-found") {
-        toast.error(
-          "Couldnot found any account with this email, kindly sign up"
-        );
+      if (isAuthError(err)) {
+        if (err.code === "auth/wrong-password") {
+          toast.error("Wrong password");
+        } else if (err.code === "auth/invalid-email") {
+          toast.error("Couldnot found any email, kindly sign up");
+        } else if (err.code === "auth/user-not-found") {
+          toast.error(
+            "Couldnot found any account with this email, kindly sign up"
+          );
+        } else {
+          toast.error("Couldnot found any account with this email and password");
+        }
       } else {
-        toast.error("Couldnot found any account with this email and password");
+        toast.error("An unknown error occurred");
       }
       console.log(err, "error");
     }
@@ -51,12 +68,16 @@ export default function Login() {
       console.log("Password reset link has been sent,kindly check your inbox");
       toast.success("password reset link has been sent");
     } catch (err) {
-      if (err.code === "auth/invalid-email") {
-        toast.error("Invalid email format");
-      } else if (err.code === "auth/user-not-found") {
-        toast.error("No user found with this email");
+      if (isAuthError(err)) {
+        if (err.code === "auth/invalid-email") {
+          toast.error("Invalid email format");
+        } else if (err.code === "auth/user-not-found") {
+          toast.error("No user found with this email");
+        } else {
+          toast.error("Failed to send reset link. Try again later.");
+        }
       } else {
-        toast.error("Failed to send reset link. Try again later.");
+        toast.error("An unknown error occurred");
       }
       console.log(err, "error");
     }
