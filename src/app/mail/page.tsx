@@ -8,7 +8,7 @@ import Image from "next/image";
 import { HiOutlineQuestionMarkCircle } from "react-icons/hi";
 import { IoIosSettings } from "react-icons/io";
 import { SiGooglegemini } from "react-icons/si";
-import { MdAccountCircle } from "react-icons/md";
+// import { MdAccountCircle } from "react-icons/md";
 import { IoTrashOutline } from "react-icons/io5";
 import { RiInboxArchiveLine } from "react-icons/ri";
 import Inbox from "../../Pages/Inbox";
@@ -29,7 +29,7 @@ import { MdOutlineInsertEmoticon } from "react-icons/md";
 import { IoIosClose } from "react-icons/io";
 import { useState } from "react";
 export default function Inboxpage() {
-  const divref = useRef(null);
+  const divref = useRef<HTMLDivElement>(null);
   const [visible, setIsVisible] = useState<boolean>(!false);
   const [display] = React.useState<boolean>(!false);
   const [compose, setCompose] = useState<boolean>(false);
@@ -39,10 +39,10 @@ export default function Inboxpage() {
   const myDivref = useRef<HTMLDivElement>(null);
   const [descriptionvalue, setDescriptionValue] = useState<string>("");
   const [selectedButtonId, setSelectedButtonId] = useState(1);
-  const [loaddata, setloadData] = useState(null);
-  const [archiveData, setarchiveData] = useState(null);
-  const [deletedData, setdeletedData] = useState(null);
-  const [trashData, setTrashData] = useState(null);
+  const [loaddata, setloadData] = useState<string | null>(null);
+  const [archiveData, setarchiveData] = useState<string | null>(null);
+  const [deletedData, setdeletedData] = useState<string | null>(null);
+  const [trashData, setTrashData] = useState<string | null>(null);
   const [sentLength, setSentLength] = useState("0");
   const [draftLength, setDraftLength] = useState("0");
   const [logout, setLogout] = useState<boolean>(false);
@@ -153,15 +153,12 @@ const closecomposesection = (): void => {
   savedvalue.push(data);
   localStorage.setItem("compose-data", JSON.stringify(savedvalue));
 
-  // update sent length
-  localStorage.setItem("sent-length", savedvalue.length.toString());
+   localStorage.setItem("sent-length", savedvalue.length.toString());
 
-  // update draft length separately (if you want to save unsent drafts)
-  const drafts = JSON.parse(localStorage.getItem("draft-data") || "[]");
+   const drafts = JSON.parse(localStorage.getItem("draft-data") || "[]");
   localStorage.setItem("draft-length", drafts.length.toString());
 
-  // clear compose
-  setInputValue("");
+    setInputValue("");
   setDescriptionValue("");
   setSubjectValue("");
   setCompose(false);
@@ -201,7 +198,7 @@ const closecomposesection = (): void => {
     };
   }, [compose]);
 
-  const handleButtonClick = (id) => {
+  const handleButtonClick = (id: number) => {
     setSelectedButtonId(id);
   };
 
@@ -245,7 +242,7 @@ const closecomposesection = (): void => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      const draftLen = localStorage.getItem("draft-length")   ;
+      const draftLen = localStorage.getItem("draft-length") || "0";
       setDraftLength(draftLen);
     }, 100);
     return () => clearInterval(interval);
@@ -283,12 +280,12 @@ const closecomposesection = (): void => {
     setLogout(false);
   };
 
-  const closedivonclickoutside = (event) => {
-    if (divref.current && !divref.current.contains(event.target)) {
+  const closedivonclickoutside = (event: MouseEvent) => {
+    if (divref.current && !divref.current.contains(event.target as Node)) {
       setLogout(false);
     }
   };
-
+              
   useEffect(() => {
     if (logout) {
       window.addEventListener("mousedown", closedivonclickoutside);

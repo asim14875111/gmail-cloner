@@ -4,4 +4,4 @@ interface MyContextType {
   resetInboxForNewUser: () => void;
 }
 
-export const MyContext = createContext<MyContextType | null>({});
+export const MyContext = createContext<MyContextType | null>(null);

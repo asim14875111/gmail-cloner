@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/firebaseConfig";
 import Link from "next/link";
@@ -11,7 +11,7 @@ import { useRouter } from "next/navigation";
 // import initialdata from "@/Pages/initialdata";
 import { initialdata } from "@/Componets/initialdata";
 // import { MyContext } from "@/Componets/MyContext";
-import { MyContext } from "@/Componets/MyContext";
+// import { MyContext } from "@/Componets/MyContext";
 export default function Signup() {
   const resetInboxForNewUser = () => {
     localStorage.setItem("MasterData", JSON.stringify(initialdata));
@@ -25,8 +25,8 @@ export default function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
- 
-  const handlesignup = async (e) => {
+
+  const handlesignup = async (e: React.FormEvent<HTMLFormElement>) => {
     // console.log(data, "calling data from context");
     e.preventDefault();
     try {
@@ -42,12 +42,23 @@ export default function Signup() {
       //   }
     } catch (err) {
       console.log(err, "error");
-      if (err.code === "auth/email-already-in-use") {
-        toast.error("This email is already registered!");
-      } else if (err.code === "auth/weak-password") {
-        toast.error("Password should be at least 6 characters.");
-      } else if (err.code === "auth/invalid-email") {
-        toast.error("Invalid email format.");
+      type FirebaseError = { code: string };
+      if (
+        typeof err === "object" &&
+        err !== null &&
+        "code" in err &&
+        typeof (err as FirebaseError).code === "string"
+      ) {
+        const code = (err as FirebaseError).code;
+        if (code === "auth/email-already-in-use") {
+          toast.error("This email is already registered!");
+        } else if (code === "auth/weak-password") {
+          toast.error("Password should be at least 6 characters.");
+        } else if (code === "auth/invalid-email") {
+          toast.error("Invalid email format.");
+        } else {
+          toast.error("Something went wrong. Please try again!");
+        }
       } else {
         toast.error("Something went wrong. Please try again!");
       }

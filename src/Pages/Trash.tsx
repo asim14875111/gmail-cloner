@@ -132,6 +132,7 @@ export default function Trash() {
         <input
           type="checkbox"
           checked={selectAll}
+          
           onChange={handleSelectAll}
           className="cursor-pointer w-4 h-4"
         />

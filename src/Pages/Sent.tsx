@@ -6,7 +6,13 @@ export default function Sent() {
   const [title, setTitle] = useState<string[]>([]);
   const [subject, setSubject] = useState<string[]>([]);
   const [visible, setIsVisible] = useState<boolean>(true);
-  const [composedata, setComposeData] = useState<any[]>([]);
+  interface ComposeData {
+    receivername: string;
+    subject: string;
+    description: string;
+    // Add other fields if needed
+  }
+  const [composedata, setComposeData] = useState<ComposeData[]>([]);
   const [selectedSimple, setSelectedSimple] = useState<number[]>([]);
   const [selectedCompose, setSelectedCompose] = useState<number[]>([]);
   const [selectAll, setSelectAll] = useState(false);
@@ -99,9 +105,9 @@ export default function Sent() {
   };
 
   const deleteSelected = () => {
-    let updatedTitle = title.filter((_, i) => !selectedSimple.includes(i));
-    let updatedSubject = subject.filter((_, i) => !selectedSimple.includes(i));
-    let updatedSent = sentmails.filter((_, i) => !selectedSimple.includes(i));
+    const updatedTitle = title.filter((_, i) => !selectedSimple.includes(i));
+    const updatedSubject = subject.filter((_, i) => !selectedSimple.includes(i));
+    const updatedSent = sentmails.filter((_, i) => !selectedSimple.includes(i));
 
     setTitle(updatedTitle);
     setSubject(updatedSubject);
@@ -111,7 +117,7 @@ export default function Sent() {
     localStorage.setItem("founder", JSON.stringify(updatedSubject));
     localStorage.setItem("Sent-value", JSON.stringify(updatedSent));
 
-    let updatedCompose = composedata.filter(
+    const updatedCompose = composedata.filter(
       (_, i) => !selectedCompose.includes(i)
     );
     setComposeData(updatedCompose);

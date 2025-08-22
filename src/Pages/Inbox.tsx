@@ -12,7 +12,7 @@ import { GoUnread } from "react-icons/go";
 // import { initialdata } from "../Components/initialdata";
 // import { initialdata } from "@/Components/initialdata";
 import { initialdata } from "@/Componets/initialdata";
-import Signup from "@/app/signup/page";
+// import Signup from "@/app/signup/page";
 // // import MyContext from "../Componets/MyContext";
 // import { MyContext } from "../Components/MyContext";
 // import { createContext } from "vm";
@@ -30,6 +30,13 @@ export default function Inbox() {
   const [readItems, setReadItems] = useState<number[]>([]);
   const [display, setIsDisplay] = useState<boolean>(true);
   const [deletedisplay, setDeleteDisplay] = useState<boolean>(false);
+  interface Item {
+    id: number;
+    title: string;
+    description: string;
+    delete: string;
+    archive: string;
+  }
   const [data, setData] = useState<Item[]>([]);
   const [inputvalue, setInputValue] = useState<string>("");
   const [unreadMails, SetUnreadMails] = useState<boolean>(false);
@@ -442,11 +449,11 @@ export default function Inbox() {
     const unreadCount = data.filter(
       (item) => !readItems.includes(item.id)
     ).length;
-    localStorage.setItem("Length-of-data", unreadCount);
+    localStorage.setItem("Length-of-data", unreadCount.toString());
   }, [data, readItems]);
 
   useEffect(() => {
-    localStorage.setItem("archive-length", data.length);
+    localStorage.setItem("archive-length", data.length.toString());
   }, []);
 
   useEffect(() => {
@@ -476,7 +483,7 @@ export default function Inbox() {
     setReadItems((prev) => [...new Set([...prev, id])]);
   };
 
-  const handleinputchange = (e) => {
+  const handleinputchange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const searchTerm = e.target.value;
     setSearchItem(searchTerm);
 
@@ -489,13 +496,13 @@ export default function Inbox() {
     setFilteredUsers(data);
   }, [data]);
 
-  const resetInboxForNewUser = () => {
-    localStorage.setItem("MasterData", JSON.stringify(initialata));
-    localStorage.removeItem("Deleted-item");
-    localStorage.removeItem("Archived-item");
-    localStorage.removeItem("read-item");
-    loadData();
-  };
+  // const resetInboxForNewUser = () => {
+  //   localStorage.setItem("MasterData", JSON.stringify(initialata));
+  //   localStorage.removeItem("Deleted-item");
+  //   localStorage.removeItem("Archived-item");
+  //   localStorage.removeItem("read-item");
+  //   loadData();
+  // };
 
   return (
     <div>
