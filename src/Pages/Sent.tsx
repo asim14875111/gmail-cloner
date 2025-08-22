@@ -69,11 +69,11 @@ export default function Sent() {
 
   const deleteComposeRow = (index: number) => {
     const updatedSent = JSON.parse(localStorage.getItem("Sent-value") || "[]");
+    const updatedCompose = composedata.filter((_, i) => i !== index);
     localStorage.setItem(
       "sent-length",
       JSON.stringify(updatedSent.length + updatedCompose.length)
     );
-    const updatedCompose = composedata.filter((_, i) => i !== index);
     setComposeData(updatedCompose);
     localStorage.setItem("compose-data", JSON.stringify(updatedCompose));
 
