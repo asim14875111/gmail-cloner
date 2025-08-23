@@ -18,7 +18,7 @@ import { auth } from "@/firebaseConfig";
 import Link from "next/link";
 import { ToastContainer, toast } from "react-toastify";
 import Image from "next/image";
-import googleimg from "../../assets/images/google-icon.svg";
+// import googleimg from "../../assets/images/google-icon.svg";
 import { useRouter } from "next/navigation";
 import { sendPasswordResetEmail } from "firebase/auth";
 
@@ -92,7 +92,7 @@ export default function Login() {
       <div className="bg-[#f0f3f8] h-[100vh]  pt-40">
         <div className="flex flex-row gap-20 items-start bg-white py-20 pt-10 w-fit justify-self-center px-10 rounded-2xl self-center">
           <div className="flex flex-col">
-            <Image className="w-12 pb-10" src={googleimg} alt="" />
+            {/* <Image className="w-12 pb-10" src={googleimg} alt="" />///// */}
             <h5 className="text-[34px] font-thin text-[#1f1f1f]">
               Welcome back!
             </h5>
