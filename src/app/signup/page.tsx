@@ -31,6 +31,10 @@ export default function Signup() {
     // console.log(data, "calling data from context");
     e.preventDefault();
     try {
+      if (!auth) {
+        toast.error("Authentication service not initialized.");
+        return;
+      }
       await createUserWithEmailAndPassword(auth, email, password);
       // resetInboxForNewUser();
       console.log("signup successfully");

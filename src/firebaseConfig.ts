@@ -11,5 +11,5 @@ const firebaseConfig = {
 
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 
-export const auth = getAuth(app);
+export const auth = typeof window !== "undefined" ? getAuth(app) : null;
 export default app;
