@@ -149,14 +149,16 @@ export default function Inboxpage() {
 
     console.log(data, "--Compose sent data");
 
-    const savedvalue = JSON.parse(localStorage.getItem("compose-data") || "[]");
-    savedvalue.push(data);
-    localStorage.setItem("compose-data", JSON.stringify(savedvalue));
+    if (typeof window !== "undefined") {
+      const savedvalue = JSON.parse(localStorage.getItem("compose-data") || "[]");
+      savedvalue.push(data);
+      localStorage.setItem("compose-data", JSON.stringify(savedvalue));
 
-    localStorage.setItem("sent-length", savedvalue.length.toString());
+      localStorage.setItem("sent-length", savedvalue.length.toString());
 
-    const drafts = JSON.parse(localStorage.getItem("draft-data") || "[]");
-    localStorage.setItem("draft-length", drafts.length.toString());
+      const drafts = JSON.parse(localStorage.getItem("draft-data") || "[]");
+      localStorage.setItem("draft-length", drafts.length.toString());
+    }
 
     setInputValue("");
     setDescriptionValue("");
@@ -166,19 +168,25 @@ export default function Inboxpage() {
 
   const handletitle = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setInputValue(event.target.value);
-    localStorage.setItem("compose-draft-title", event.target.value);
+    if (typeof window !== "undefined") {
+      localStorage.setItem("compose-draft-title", event.target.value);
+    }
     console.log(event.target.value, "Compose draft title");
   };
   const handlesubject = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setSubjectValue(event.target.value);
-    localStorage.setItem("compose-subject", event.target.value);
+    if (typeof window !== "undefined") {
+      localStorage.setItem("compose-subject", event.target.value);
+    }
     console.log(event.target.value, "Compose draft subject");
   };
   const handledescription = (
     event: React.ChangeEvent<HTMLInputElement>
   ): void => {
     setDescriptionValue(event.target.value);
-    localStorage.setItem("compose-description", event.target.value);
+    if (typeof window !== "undefined") {
+      localStorage.setItem("compose-description", event.target.value);
+    }
     console.log(event.target.value, "Compose draft description");
   };
 
@@ -202,68 +210,87 @@ export default function Inboxpage() {
   };
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      const lengthofdata = localStorage.getItem("Length-of-data");
-      setloadData(lengthofdata);
-    }, 100);
-    return () => clearInterval(interval);
+    if (typeof window !== "undefined") {
+      const interval = setInterval(() => {
+        const lengthofdata = localStorage.getItem("Length-of-data");
+        setloadData(lengthofdata);
+      }, 100);
+      return () => clearInterval(interval);
+    }
   });
   useEffect(() => {
-    const interval = setInterval(() => {
-      const lengthofarchive = localStorage.getItem("Length-of-archive");
-      setarchiveData(lengthofarchive);
-    }, 100);
-    return () => clearInterval(interval);
+    if (typeof window !== "undefined") {
+      const interval = setInterval(() => {
+        const lengthofarchive = localStorage.getItem("Length-of-archive");
+        setarchiveData(lengthofarchive);
+      }, 100);
+      return () => clearInterval(interval);
+    }
   });
   useEffect(() => {
-    const interval = setInterval(() => {
-      const lengthofdeleted = localStorage.getItem("Deleted-item-length");
-      setdeletedData(lengthofdeleted);
-    }, 100);
-    return () => clearInterval(interval);
+    if (typeof window !== "undefined") {
+      const interval = setInterval(() => {
+        const lengthofdeleted = localStorage.getItem("Deleted-item-length");
+        setdeletedData(lengthofdeleted);
+      }, 100);
+      return () => clearInterval(interval);
+    }
   });
   useEffect(() => {
-    const interval = setInterval(() => {
-      const lengthofdeletedfromtrash = localStorage.getItem(
-        "Deleted-item-length"
-      );
-      setTrashData(lengthofdeletedfromtrash);
-    }, 100);
-    return () => clearInterval(interval);
+    if (typeof window !== "undefined") {
+      const interval = setInterval(() => {
+        const lengthofdeletedfromtrash = localStorage.getItem(
+          "Deleted-item-length"
+        );
+        setTrashData(lengthofdeletedfromtrash);
+      }, 100);
+      return () => clearInterval(interval);
+    }
   });
   useEffect(() => {
-    const interval = setInterval(() => {
-      const sentLen = localStorage.getItem("sent-length") || "0";
-      setSentLength(sentLen);
-    }, 100);
-    return () => clearInterval(interval);
+    if (typeof window !== "undefined") {
+      const interval = setInterval(() => {
+        const sentLen = localStorage.getItem("sent-length") || "0";
+        setSentLength(sentLen);
+      }, 100);
+      return () => clearInterval(interval);
+    }
   }, []);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      const draftLen = localStorage.getItem("draft-length") || "0";
-      setDraftLength(draftLen);
-    }, 100);
-    return () => clearInterval(interval);
+    if (typeof window !== "undefined") {
+      const interval = setInterval(() => {
+        const draftLen = localStorage.getItem("draft-length") || "0";
+        setDraftLength(draftLen);
+      }, 100);
+      return () => clearInterval(interval);
+    }
   }, []);
   useEffect(() => {
-    if (inputvalue.trim() !== "") {
-      localStorage.setItem("draft-email-compose", inputvalue);
-      localStorage.setItem("draft-length-compose", "1");
-    } else {
-      localStorage.removeItem("draft-email-compose");
-      localStorage.setItem("draft-length-compose", "0");
+    if (typeof window !== "undefined") {
+      if (inputvalue.trim() !== "") {
+        localStorage.setItem("draft-email-compose", inputvalue);
+        localStorage.setItem("draft-length-compose", "1");
+      } else {
+        localStorage.removeItem("draft-email-compose");
+        localStorage.setItem("draft-length-compose", "0");
+      }
     }
   }, [inputvalue]);
 
-  const getteddata = localStorage.getItem("draft-length-compose");
+  let getteddata: string | null = null;
+  if (typeof window !== "undefined") {
+    getteddata = localStorage.getItem("draft-length-compose");
+  }
 
   const router = useRouter();
 
   // useEffect(()=>{
-  const usermail = localStorage.getItem("mail");
-  if (!usermail) {
-    router.push("/signup");
+  if (typeof window !== "undefined") {
+    const usermail = localStorage.getItem("mail");
+    if (!usermail) {
+      router.push("/signup");
+    }
   }
 
   // },[router])
@@ -272,8 +299,10 @@ export default function Inboxpage() {
     setLogout(true);
   };
   const removedatafromls = () => {
-    localStorage.removeItem("mail");
-    window.location.reload();
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("mail");
+      window.location.reload();
+    }
   };
   const hidediv = () => {
     setLogout(false);
