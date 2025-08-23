@@ -17,8 +17,6 @@ import { initialdata } from "@/Componets/initialdata";
 // import { MyContext } from "../Components/MyContext";
 // import { createContext } from "vm";
 // import unread from "./unreatd";
-
-
 export default function Inbox() {
   // const initialdata = initialdata
   const [visible, setIsVisible] = useState<boolean>(false);
@@ -842,7 +840,7 @@ export default function Inbox() {
                       item.id === currentIndex && (
                         <div key={item.id}>
                           <div className="flex flex-col justify-between h-[71vh]">
-                         {" "}
+                            {" "}
                             <div>
                               <div>
                                 <p className="text-2xl font-semibold">
