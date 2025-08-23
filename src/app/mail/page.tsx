@@ -4,7 +4,13 @@ export const dynamic = "force-dynamic";
 import React, { useEffect, useRef, useState } from "react";
 import { TbInbox } from "react-icons/tb";
 import { LuSendHorizontal } from "react-icons/lu";
-import { MdOutlineDrafts, MdCloseFullscreen, MdFormatColorText, MdOutlineInsertPhoto, MdOutlineInsertEmoticon } from "react-icons/md";
+import {
+  MdOutlineDrafts,
+  MdCloseFullscreen,
+  MdFormatColorText,
+  MdOutlineInsertPhoto,
+  MdOutlineInsertEmoticon,
+} from "react-icons/md";
 import { FaPen, FaGoogleDrive, FaChevronDown } from "react-icons/fa6";
 import Image from "next/image";
 import { HiOutlineQuestionMarkCircle } from "react-icons/hi";
@@ -54,9 +60,19 @@ export default function Inboxpage() {
 
   const sidebarcomponents: Item[] = [
     { id: 1, icon: <TbInbox />, title: "Inbox", value: "Inbox-button" },
-    { id: 2, icon: <RiInboxArchiveLine />, title: "Archive", value: "Archive-button" },
+    {
+      id: 2,
+      icon: <RiInboxArchiveLine />,
+      title: "Archive",
+      value: "Archive-button",
+    },
     { id: 3, icon: <LuSendHorizontal />, title: "Sent", value: "Sent-button" },
-    { id: 4, icon: <MdOutlineDrafts />, title: "Drafts", value: "Drafts-button" },
+    {
+      id: 4,
+      icon: <MdOutlineDrafts />,
+      title: "Drafts",
+      value: "Drafts-button",
+    },
     { id: 5, icon: <IoTrashOutline />, title: "Trash", value: "Trash-button" },
   ];
 
@@ -86,10 +102,16 @@ export default function Inboxpage() {
   };
 
   const closecomposesection = () => {
-    const data = { receivername: inputvalue, subject: subjectvalue, description: descriptionvalue };
+    const data = {
+      receivername: inputvalue,
+      subject: subjectvalue,
+      description: descriptionvalue,
+    };
 
     if (typeof window !== "undefined") {
-      const savedvalue = JSON.parse(localStorage.getItem("compose-data") || "[]");
+      const savedvalue = JSON.parse(
+        localStorage.getItem("compose-data") || "[]"
+      );
       savedvalue.push(data);
       localStorage.setItem("compose-data", JSON.stringify(savedvalue));
       localStorage.setItem("sent-length", savedvalue.length.toString());
@@ -218,8 +240,12 @@ export default function Inboxpage() {
             className="bg-white justify-self-center self-center mt-50 px-4 w-[315px] sm:w-[400px] rounded-xl py-3"
           >
             <div className="pb-4 pt-1">
-              <p className=" text-2xl pb-3 text-center font-medium text-gray-900">Logout confirmation</p>
-              <h6 className="text-gray-600 text-center">Are you sure you want to logout?</h6>
+              <p className=" text-2xl pb-3 text-center font-medium text-gray-900">
+                Logout confirmation
+              </p>
+              <h6 className="text-gray-600 text-center">
+                Are you sure you want to logout?
+              </h6>
             </div>
             <div className="flex flex-col pb-2">
               <button
@@ -247,7 +273,9 @@ export default function Inboxpage() {
             className="absolute left-4 md:left-auto md:fixed bg-white md:right-30 bottom-0 pb-4 w-[90%] rounded-md sm:w-[500px]"
           >
             <div className="flex justify-between py-1 items-center bg-[#f2f5fc] rounded-t-lg px-4 mb-4">
-              <div className="text-sm font-semibold text-gray-600">New Message</div>
+              <div className="text-sm font-semibold text-gray-600">
+                New Message
+              </div>
               <div className="flex gap-1 items-center">
                 <p>
                   <MdCloseFullscreen />
@@ -342,7 +370,12 @@ export default function Inboxpage() {
           onClick={togglesidebar}
           className="flex items-center gap-2 cursor-pointer hover:scale-102 transition-200"
         >
-          <Image src="assests/gmail.svg" width={36} height={40} alt="gmail-img" />
+          <Image
+            src="assests/gmail.svg"
+            width={36}
+            height={40}
+            alt="gmail-img"
+          />
           <h5 className="text-[21px] font-medium text-gray-700">Gmail</h5>
         </div>
         <div className="hidden sm:inline h-fit pl-10 w-[55.5%] rounded-full bg-[#e9edf6]"></div>
@@ -369,13 +402,18 @@ export default function Inboxpage() {
         </div>
       </div>
 
-      {/* Sidebar + Content */}
       <div className="flex flex-col sm:flex sm:flex-row">
-        <div className="w-full flex flex-col-reverse bg-[#f9fafe] sm:w-fit sm:h-[90vh]">
+        <div
+        style={{justifyContent:"start"}}
+           className="w-full flex flex-col-reverse bg-[#f9fafe] sm:w-fit sm:h-[90vh]"
+        >
           <div className="flex flex-col w-full sm:w-fit pb-2 sm:pb-0 gap-2 pr-4 pt-4">
             {sidebarcomponents.map((item: Item, index) => (
               <div
-                style={{ backgroundColor: selectedButtonId === item.id ? "#e5e7eb" : "" }}
+                style={{
+                  backgroundColor:
+                    selectedButtonId === item.id ? "#e5e7eb" : "",
+                }}
                 onClick={() => {
                   handleButtonClick(item.id);
                   setCurrentIndex(index);
@@ -385,16 +423,30 @@ export default function Inboxpage() {
               >
                 <div className="flex gap-2">
                   <div className="text-xl">{item.icon}</div>
-                  {visible && <p className="text-sm text-gray-500 w-40 font-semibold">{item.title}</p>}
+                  {visible && (
+                    <p className="text-sm text-gray-500 w-40 font-semibold">
+                      {item.title}
+                    </p>
+                  )}
                 </div>
                 <div>
-                  {index === 0 && <p className="font-semibold pr-2">{loaddata || 0}</p>}
-                  {index === 1 && <p className="font-semibold pr-2">{archiveData || 0}</p>}
-                  {index === 2 && <p className="font-semibold pr-2">{sentLength || 0}</p>}
-                  {index === 3 && (
-                    <p className="font-semibold pr-2">{Number(draftLength) + Number(getteddata || 0)}</p>
+                  {index === 0 && (
+                    <p className="font-semibold pr-2">{loaddata || 0}</p>
                   )}
-                  {index === 4 && <p className="font-semibold pr-2">{trashData || 0}</p>}
+                  {index === 1 && (
+                    <p className="font-semibold pr-2">{archiveData || 0}</p>
+                  )}
+                  {index === 2 && (
+                    <p className="font-semibold pr-2">{sentLength || 0}</p>
+                  )}
+                  {index === 3 && (
+                    <p className="font-semibold pr-2">
+                      {Number(draftLength) + Number(getteddata || 0)}
+                    </p>
+                  )}
+                  {index === 4 && (
+                    <p className="font-semibold pr-2">{trashData || 0}</p>
+                  )}
                 </div>
               </div>
             ))}
@@ -405,7 +457,11 @@ export default function Inboxpage() {
               className="bg-[#c3e7ff] flex gap-2 items-center w-full px-3 py-3 cursor-pointer hover:bg-[#b2d4eb] hover:scale-101 transition rounded-xl"
             >
               <FaPen />
-              {visible && <span className="w-full font-semibold text-gray-500">Compose</span>}
+              {visible && (
+                <span className="w-full font-semibold text-gray-500">
+                  Compose
+                </span>
+              )}
             </p>
           </div>
         </div>
