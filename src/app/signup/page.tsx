@@ -17,7 +17,7 @@ export default function Signup() {
     localStorage.setItem("MasterData", JSON.stringify(initialdata));
     localStorage.removeItem("Deleted-item");
     localStorage.removeItem("Archived-item");
-    localStorage.removeItem("Length-of-archive");
+    localStorage.removeItem("Length-of-archive");pl
     localStorage.removeItem("read-item");
     // loadData();
   };

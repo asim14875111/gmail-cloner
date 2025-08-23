@@ -150,14 +150,14 @@ export default function Inboxpage() {
     console.log(data, "--Compose sent data");
 
     if (typeof window !== "undefined") {
-      const savedvalue = JSON.parse(localStorage.getItem("compose-data") || "[]");
+      const savedvalue = JSON.parse(window.localStorage.getItem("compose-data") || "[]");
       savedvalue.push(data);
-      localStorage.setItem("compose-data", JSON.stringify(savedvalue));
+      window.localStorage.setItem("compose-data", JSON.stringify(savedvalue));
 
-      localStorage.setItem("sent-length", savedvalue.length.toString());
+      window.localStorage.setItem("sent-length", savedvalue.length.toString());
 
-      const drafts = JSON.parse(localStorage.getItem("draft-data") || "[]");
-      localStorage.setItem("draft-length", drafts.length.toString());
+      const drafts = JSON.parse(window.localStorage.getItem("draft-data") || "[]");
+      window.localStorage.setItem("draft-length", drafts.length.toString());
     }
 
     setInputValue("");
@@ -169,14 +169,14 @@ export default function Inboxpage() {
   const handletitle = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setInputValue(event.target.value);
     if (typeof window !== "undefined") {
-      localStorage.setItem("compose-draft-title", event.target.value);
+      window.localStorage.setItem("compose-draft-title", event.target.value);
     }
     console.log(event.target.value, "Compose draft title");
   };
   const handlesubject = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setSubjectValue(event.target.value);
     if (typeof window !== "undefined") {
-      localStorage.setItem("compose-subject", event.target.value);
+      window.localStorage.setItem("compose-subject", event.target.value);
     }
     console.log(event.target.value, "Compose draft subject");
   };
@@ -185,7 +185,7 @@ export default function Inboxpage() {
   ): void => {
     setDescriptionValue(event.target.value);
     if (typeof window !== "undefined") {
-      localStorage.setItem("compose-description", event.target.value);
+      window.localStorage.setItem("compose-description", event.target.value);
     }
     console.log(event.target.value, "Compose draft description");
   };
@@ -212,7 +212,7 @@ export default function Inboxpage() {
   useEffect(() => {
     if (typeof window !== "undefined") {
       const interval = setInterval(() => {
-        const lengthofdata = localStorage.getItem("Length-of-data");
+        const lengthofdata = window.localStorage.getItem("Length-of-data");
         setloadData(lengthofdata);
       }, 100);
       return () => clearInterval(interval);
@@ -221,7 +221,7 @@ export default function Inboxpage() {
   useEffect(() => {
     if (typeof window !== "undefined") {
       const interval = setInterval(() => {
-        const lengthofarchive = localStorage.getItem("Length-of-archive");
+        const lengthofarchive = window.localStorage.getItem("Length-of-archive");
         setarchiveData(lengthofarchive);
       }, 100);
       return () => clearInterval(interval);
@@ -230,7 +230,7 @@ export default function Inboxpage() {
   useEffect(() => {
     if (typeof window !== "undefined") {
       const interval = setInterval(() => {
-        const lengthofdeleted = localStorage.getItem("Deleted-item-length");
+        const lengthofdeleted = window.localStorage.getItem("Deleted-item-length");
         setdeletedData(lengthofdeleted);
       }, 100);
       return () => clearInterval(interval);
@@ -239,7 +239,7 @@ export default function Inboxpage() {
   useEffect(() => {
     if (typeof window !== "undefined") {
       const interval = setInterval(() => {
-        const lengthofdeletedfromtrash = localStorage.getItem(
+        const lengthofdeletedfromtrash = window.localStorage.getItem(
           "Deleted-item-length"
         );
         setTrashData(lengthofdeletedfromtrash);
