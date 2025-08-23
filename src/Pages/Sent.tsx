@@ -211,7 +211,7 @@ export default function Sent() {
                     />
                     <div className="flex flex-col  w-full mt-1">
                       <div className="flex gap-2 px-4 py-2 rounded-xl w-1/3 items-center pl-2">
-                        <p className="font-semibold text-gray-700">To:</p>
+                        <p className="font-semibold text-black">To:</p>
                         <p className="text-gray-900 font-semibold ">{toItem}</p>
                       </div>
                       <div className="flex">
@@ -219,7 +219,7 @@ export default function Sent() {
                           <p className="font-semibold text-gray-600">
                             Subject:
                           </p>
-                          <div className="text-gray-700">{subject[index]}</div>
+                          <div className="text-gray-900">{subject[index]}</div>
                         </div>
                         <div className="flex gap-2 px-4 py-2 rounded-xl w-1/3 pt-0">
                           <p className="font-semibold text-gray-600">
@@ -261,7 +261,7 @@ export default function Sent() {
 
                   <div className="flex flex-col w-full">
                     <div className="flex gap-2 px-4 py-2 rounded-xl w-1/3">
-                      <p className="font-semibold">To:</p>
+                      <p className="font-semibold text-black">To:</p>
                       <p className="font-bold text-gray-900">
                         {data.receivername}
                       </p>
@@ -269,7 +269,7 @@ export default function Sent() {
                     <div className="flex flex-col sm:flex sm:flex-row gap-2 w-full">
                       <div className="flex gap-2 px-4 py-2 rounded-xl pt-0 w-1/3">
                         <p className="font-semibold text-gray-500">Subject:</p>
-                        <p className="text-gray-500">{data.subject}</p>
+                        <p className="text-gray-900">{data.subject}</p>
                       </div>
                       <div className="flex gap-2 px-4 py-2 rounded-xl pt-0 w-1/3">
                         <p className="font-semibold text-gray-600">

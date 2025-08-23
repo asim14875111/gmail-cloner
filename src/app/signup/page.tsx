@@ -19,6 +19,10 @@ export default function Signup() {
     localStorage.removeItem("Archived-item");
     localStorage.removeItem("Length-of-archive");
     localStorage.removeItem("read-item");
+    localStorage.removeItem("compose-data");
+    localStorage.removeItem("compose-description");
+    localStorage.removeItem("compose-draft-title");
+    localStorage.removeItem("compose-subject");
     // loadData();
   };
   // const ctx = useContext(MyContext);
@@ -76,70 +80,72 @@ export default function Signup() {
         <input className="border" type="email" placeholder="email" />
         <input type="password" className="border" />
       </form> */}
-      <div className="bg-[#f0f3f8] h-[100vh]  pt-40">
-        <ToastContainer />
-        <div className="flex flex-row gap-20 items-start bg-white py-20 pt-10 w-fit justify-self-center px-10 rounded-2xl self-center">
-          <div className="flex flex-col">
-            <Image className="w-12 pb-10" src={googleimg} alt="" />
-            <h5 className="text-[34px] font-thin text-[#1f1f1f]">Sign up</h5>
-            <p className="text-[#1f1f1f] max-w-[400px]">
-              with your Google Account. This account will be available to other
-              Google apps in the browser.
-            </p>
-          </div>
-          <div className="pt-20">
-            <div>
-              <div className="flex flex-col gap-1">
-                <form onSubmit={handlesignup}>
-                  <input
-                    type="email"
-                    placeholder="Email"
-                    value={email}
-                    required
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="border rounded-md pl-4 py-2.5 w-full"
-                  />
-                  <input
-                    type="password"
-                    placeholder="password"
-                    value={password}
-                    required
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="border rounded-md mt-3 pl-4 py-2.5 w-full"
-                  />
-                  <div className="flex w-full pt-3 justify-between">
-                    <a className="text-[#444746] hover:underline cursor-pointer  text-xs mt-2">
-                      You can use letters, numbers & periods
-                    </a>
-                    <button
-                      type="submit"
-                      className="bg-blue-600 px-4 py-1.5 rounded-full text-white mt-2 justify-end hover:bg-blue-800 cursor-pointer"
-                    >
-                      Sign up
-                    </button>
-                  </div>
-                </form>
-              </div>
-              {/* <p className="text-sm text-[#444746] max-w-[400px] pt-10">
+      <div className="flex sm:bg-[#f0f3f8] md:h-[100vh] justify-center items-center sm:px-4 sm:py-4">
+        <div className="">
+          <ToastContainer />
+          <div className="flex flex-col md:flex md:flex-row gap-20 items-start bg-white py-20 pt-10 w-fit justify-self-center px-4 sm:px-10 sm:rounded-2xl self-center">
+            <div className="flex flex-col">
+              <Image className="w-12 pb-10" src={googleimg} alt="" />
+              <h5 className="text-[34px] font-thin text-[#1f1f1f]">Sign up</h5>
+              <p className="text-[#1f1f1f] max-w-[400px]">
+                with your Google Account. This account will be available to
+                other Google apps in the browser.
+              </p>
+            </div>
+            <div className="pt-20">
+              <div>
+                <div className="flex flex-col gap-1">
+                  <form onSubmit={handlesignup}>
+                    <input
+                      type="email"
+                      placeholder="Email"
+                      value={email}
+                      required
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="border rounded-md pl-4 py-2.5 w-full text-gray-900 border-gray-900"
+                    />
+                    <input
+                      type="password"
+                      placeholder="password"
+                      value={password}
+                      required
+                      onChange={(e) => setPassword(e.target.value)}
+                      className="border rounded-md mt-3 pl-4 py-2.5 w-full text-gray-900 border-gray-900"
+                    />
+                    <div className="flex flex-col lg:flex lg:flex-row w-full pt-3 items-center justify-between">
+                      <a className="text-[#444746] hover:underline cursor-pointer  text-xs mt-2">
+                        You can use letters, numbers & periods
+                      </a>
+                      <button
+                        type="submit"
+                        className="bg-blue-600 px-4 w-full lg:w-fit py-1.5 rounded-full text-white mt-2 justify-end hover:bg-blue-800 cursor-pointer"
+                      >
+                        Sign up
+                      </button>
+                    </div>
+                  </form>
+                </div>
+                {/* <p className="text-sm text-[#444746] max-w-[400px] pt-10">
                 Not your computer? Use Guest mode to sign in privately.
                 <span className="text-[#0b57d0] hover:underline cursor-pointer font-semibold">
                   Learn more about using Guest mode
                 </span>
               </p> */}
-            </div>
-            <div className="flex pt-10 gap-2">
-              <Link href="/login">
-                <p className="hover:underline text-blue-600 cursor-pointer">
-                  Already have an account, login?
-                </p>
-              </Link>
+              </div>
+              <div className="flex pt-10 gap-2">
+                <Link href="/login">
+                  <p className="hover:underline text-blue-600 cursor-pointer">
+                    Already have an account, login?
+                  </p>
+                </Link>
 
-              {/* <button
+                {/* <button
                 type="submit"
                 className="bg-blue-500 text-white px-4  rounded-full py-1 mt-1"
               >
                 Next
               </button> */}
+              </div>
             </div>
           </div>
         </div>

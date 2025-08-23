@@ -11,7 +11,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="bg-gray-50 text-sm text-[#222]">
+      <body className="bg-gray-50 text-sm  text-[#222]">
         <MyContext.Provider value={{ resetInboxForNewUser }}>
           {children}
         </MyContext.Provider>

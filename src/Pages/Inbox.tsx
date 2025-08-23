@@ -18,7 +18,6 @@ import { initialdata } from "@/Componets/initialdata";
 // import { createContext } from "vm";
 // import unread from "./unreatd";
 
-
 export default function Inbox() {
   // const initialdata = initialdata
   const [visible, setIsVisible] = useState<boolean>(false);
@@ -518,7 +517,7 @@ export default function Inbox() {
             className="cursor-pointer w-5 h-4"
             type="checkbox"
           />
-          <div className="flex flex-col  gap-2 sm:px-2 items-center pr-2 pl-0 sm:flex sm:flex-row ">
+          <div className="flex flex-col  gap-2 sm:px-2 text-black items-center pr-2 pl-0 sm:flex sm:flex-row ">
             {deletedisplay && (
               <div
                 onClick={readSelectedEmails}
@@ -539,7 +538,7 @@ export default function Inbox() {
             value={searchItem}
             onChange={handleinputchange}
             type="text"
-            className="border-none outline-0 pl-6 py-2"
+            className="border-none outline-0 pl-6 py-2 placeholder:text-gray-900 text-black"
             placeholder="search mail"
           />
         </div>
@@ -552,7 +551,7 @@ export default function Inbox() {
           </button>
 
           {deletedisplay && (
-            <div className="flex flex-col sm:flex sm:flex-row-reverse gap-2 items-center">
+            <div className="flex flex-col sm:flex sm:flex-row-reverse text-black gap-2 items-center">
               <div
                 onClick={deleteSelectedEmails}
                 className="text-gray-600 cursor-pointer hover:scale-105 transition text-lg"
@@ -575,7 +574,7 @@ export default function Inbox() {
             <p className="absolute pl-5 pt-2">Unread</p>
             <div className="w-full flex flex-row mt-6">
               {display && data.length > 0 ? (
-                <div className="w-full h-[83vh] flex flex-col gap-4 px-4 py-4 overflow-auto border-r border-gray-300">
+                <div className="w-full h-[83vh] flex flex-col gap-4 px-4 py-4 overflow-auto border-r   border-gray-300">
                   {filterUsers.map((item: Item) => (
                     <div
                       onClick={() => {
@@ -583,7 +582,7 @@ export default function Inbox() {
                         showdetailssection();
                         markAsRead(item.id);
                       }}
-                      className={`flex flex-row items-center hover:bg-gray-100 cursor-pointer gap-4 justify-start rounded-xl bg-gray-50 p-2 border border-gray-200 ${
+                      className={`flex flex-row items-start hover:bg-gray-100 cursor-pointer gap-4 justify-start rounded-xl bg-gray-50 p-2 border border-gray-200 ${
                         readItems.includes(item.id) ? "bg-gray-200" : "  "
                       } `}
                       key={item.id}
@@ -594,7 +593,7 @@ export default function Inbox() {
                         }}
                         checked={!!checkedItems[item.id]}
                         onChange={() => handleCheckboxChange(item.id)}
-                        className="cursor-pointer"
+                        className="cursor-pointer mt-2"
                         type="checkbox"
                       />
                       <div className="flex flex-col items-start">
@@ -617,13 +616,13 @@ export default function Inbox() {
                     <div className="flex items-center">
                       <p
                         onClick={hidedetailssection}
-                        className="text-sm cursor-pointer hover:scale-104 transition"
+                        className="text-sm cursor-pointer hover:scale-104 text-black   transition"
                       >
                         <FaArrowLeft />
                       </p>
                       <div className="flex items-center gap-2 pl-6 border-r pr-2 border-gray-400">
                         <p
-                          className="pt-[1px] text-lg cursor-pointer hover:scale-102 transition"
+                          className="pt-[1px] text-lg cursor-pointer hover:scale-102   transition"
                           onClick={() => {
                             const currentItem = data.find(
                               (item) => item.id === currentIndex
@@ -742,7 +741,7 @@ export default function Inbox() {
         {allMails && (
           <div className="w-full flex flex-row">
             {display && data.length > 0 ? (
-              <div className="w-full h-[83vh] flex flex-col gap-4 px-4 py-4 overflow-auto border-r border-gray-300">
+              <div className="w-full h-[83vh] flex flex-col gap-4 px-4 py-4 overflow-auto border-r bg-white border-gray-300">
                 {filterUsers.map((item: Item) => (
                   <div
                     onClick={() => {
@@ -750,7 +749,7 @@ export default function Inbox() {
                       showdetailssection();
                       markAsRead(item.id);
                     }}
-                    className={`flex flex-row items-center hover:bg-gray-100 cursor-pointer gap-4 justify-start rounded-xl bg-gray-50 p-2 border border-gray-200 ${
+                    className={`flex flex-row items-start hover:bg-gray-100 cursor-pointer gap-4 justify-start rounded-xl bg-gray-50 p-2 border border-gray-200 ${
                       readItems.includes(item.id) ? "bg-gray-200" : ""
                     }`}
                     key={item.id}
@@ -761,11 +760,11 @@ export default function Inbox() {
                       }}
                       checked={!!checkedItems[item.id]}
                       onChange={() => handleCheckboxChange(item.id)}
-                      className="cursor-pointer"
+                      className="cursor-pointer mt-1"
                       type="checkbox"
                     />
                     <div className="flex flex-col items-start">
-                      <h5 className="font-semibold">{item.title}</h5>
+                      <h5 className="font-semibold text-black">{item.title}</h5>
                       <p className="text-gray-500 text-sm    text-start line-clamp-1  ">
                         {item.description}
                       </p>
@@ -780,7 +779,7 @@ export default function Inbox() {
             )}
             {visible && (
               <div className="absolute   bg-white flex w-fit m  pr-0 flex-col">
-                <div className="flex justify-between items-center px-2 py-3 border-gray-300 border-t border-b bg-gray-50 w-[100%]">
+                <div className="flex justify-between items-center px-2 py-3 border-gray-300 text-black border-t border-b bg-gray-50 w-[100%]">
                   <div className="flex items-center">
                     <p
                       onClick={hidedetailssection}
@@ -835,10 +834,10 @@ export default function Inbox() {
                       item.id === currentIndex && (
                         <div key={item.id}>
                           <div className="flex flex-col justify-between h-[71vh]">
-                         {" "}
+                            {" "}
                             <div>
                               <div>
-                                <p className="text-2xl font-semibold">
+                                <p className="text-2xl font-semibold text-black">
                                   {item.subject}
                                 </p>
                                 <p className="text-sm flex pb-4 items-center text-gray-500">
@@ -847,7 +846,9 @@ export default function Inbox() {
                                     <IoMdArrowDropdown />
                                   </span>{" "}
                                 </p>
-                                <p className="pb-6 pt-2">{item.receivername}</p>
+                                <p className="pb-6 pt-2 text-black">
+                                  {item.receivername}
+                                </p>
                                 <p className="text-[#222] text-sm">
                                   {item.description}
                                 </p>
@@ -871,13 +872,13 @@ export default function Inbox() {
                                   <FaReplyAll />
                                 </span>{" "}
                               </p>
-                              <div className="flex border py-1 pr-1 rounded-full">
+                              <div className="flex border border-black py-1 pr-1 rounded-full">
                                 <input
                                   value={inputvalue}
                                   onChange={(e) =>
                                     handleChange(e, item.subject, item.founder)
                                   }
-                                  className="border-0 pl-4 outline-none w-full"
+                                  className="border-0 pl-4 outline-none  w-full"
                                   type="text"
                                 />
                                 <p

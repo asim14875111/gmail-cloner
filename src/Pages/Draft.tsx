@@ -49,8 +49,11 @@ export default function Draft() {
 
   const cleardraft = (): void => {
     // Move all drafts to Trash before clearing
-    const deletedItems = JSON.parse(localStorage.getItem("Deleted-item") || "[]");
-    let itemsToDelete = [];
+    const deletedItems = JSON.parse(
+      localStorage.getItem("Deleted-item") || "[]"
+    );
+    const itemsToDelete: { id: number; title: string; description: string }[] =
+      [];
     if (
       (title && title.trim() !== "") ||
       (founder && founder.trim() !== "") ||
@@ -75,7 +78,10 @@ export default function Draft() {
     }
     const updatedDeleted = [...deletedItems, ...itemsToDelete];
     localStorage.setItem("Deleted-item", JSON.stringify(updatedDeleted));
-    localStorage.setItem("Deleted-item-length", JSON.stringify(updatedDeleted.length));
+    localStorage.setItem(
+      "Deleted-item-length",
+      JSON.stringify(updatedDeleted.length)
+    );
 
     localStorage.setItem("draft-length-compose", "0");
     localStorage.removeItem("draft-email-compose");
@@ -100,7 +106,9 @@ export default function Draft() {
 
   const deleteFirstRow = () => {
     // Move to Trash
-    const deletedItems = JSON.parse(localStorage.getItem("Deleted-item") || "[]");
+    const deletedItems = JSON.parse(
+      localStorage.getItem("Deleted-item") || "[]"
+    );
     const itemToDelete = {
       id: Date.now(),
       title: title || "",
@@ -108,22 +116,27 @@ export default function Draft() {
     };
     const updatedDeleted = [...deletedItems, itemToDelete];
     localStorage.setItem("Deleted-item", JSON.stringify(updatedDeleted));
-    localStorage.setItem("Deleted-item-length", JSON.stringify(updatedDeleted.length));
+    localStorage.setItem(
+      "Deleted-item-length",
+      JSON.stringify(updatedDeleted.length)
+    );
 
-  setTitle(null);
-  setFounder(null);
-  setDraftEmail(null);
-  localStorage.removeItem("draft-email-compose");
+    setTitle(null);
+    setFounder(null);
+    setDraftEmail(null);
+    localStorage.removeItem("draft-email-compose");
 
-  localStorage.removeItem("title-subject");
-  localStorage.removeItem("draft-founder");
-  localStorage.removeItem("draft-email");
-  localStorage.setItem("draft-length-compose", "0");
-  updateDraftLength();
+    localStorage.removeItem("title-subject");
+    localStorage.removeItem("draft-founder");
+    localStorage.removeItem("draft-email");
+    localStorage.setItem("draft-length-compose", "0");
+    updateDraftLength();
   };
 
   const deleteSecondRow = () => {
-     const deletedItems = JSON.parse(localStorage.getItem("Deleted-item") || "[]");
+    const deletedItems = JSON.parse(
+      localStorage.getItem("Deleted-item") || "[]"
+    );
     const itemToDelete = {
       id: Date.now(),
       title: data || "",
@@ -131,17 +144,20 @@ export default function Draft() {
     };
     const updatedDeleted = [...deletedItems, itemToDelete];
     localStorage.setItem("Deleted-item", JSON.stringify(updatedDeleted));
-    localStorage.setItem("Deleted-item-length", JSON.stringify(updatedDeleted.length));
+    localStorage.setItem(
+      "Deleted-item-length",
+      JSON.stringify(updatedDeleted.length)
+    );
 
-  setData(null);
-  setSubject(null);
-  setDescription(null);
-  localStorage.removeItem("draft-email-compose");
+    setData(null);
+    setSubject(null);
+    setDescription(null);
+    localStorage.removeItem("draft-email-compose");
 
-  localStorage.removeItem("compose-draft-title");
-  localStorage.removeItem("compose-subject");
-  localStorage.removeItem("compose-description");
-  updateDraftLength();
+    localStorage.removeItem("compose-draft-title");
+    localStorage.removeItem("compose-subject");
+    localStorage.removeItem("compose-description");
+    updateDraftLength();
   };
 
   const hasFirstRow =
@@ -184,13 +200,13 @@ export default function Draft() {
                   )}
                   <div className="flex">
                     {founder && founder.trim() !== "" && (
-                      <div className="flex gap-2  px-4 py-2 rounded-xl w-full md:w-1/3">
+                      <div className="flex gap-2  px-4 py-2 rounded-xl w-full md:w-1/3 text-black">
                         <p className="font-semibold">Subject:</p>
                         <p className=" ">{founder}</p>
                       </div>
                     )}
                     {draft && draft.trim() !== "" && (
-                      <div className="flex gap-2  px-4 py-2 rounded-xl w-full md:w-1/3">
+                      <div className="flex gap-2  px-4 py-2 rounded-xl w-full md:w-1/3 text-black">
                         <p className="font-semibold">Description:</p>
                         <p className="whitespace-pre-line break-words">
                           {draft}
@@ -213,21 +229,21 @@ export default function Draft() {
             <div className=" flex flex-row gap-4 mx-3 mt-3 px-3 pt-1 bg-gray-50 p-0 border border-gray-200 rounded-xl">
               <div className="flex flex-col w-full">
                 {data && data.trim() !== "" && (
-                  <div className="flex gap-2  px-4 py-2 rounded-xl w-full md:w-1/3">
+                  <div className="flex gap-2  px-4 py-2 rounded-xl w-full md:w-1/3 text-black">
                     <p className="font-semibold">To:</p>
                     <p className="whitespace-pre-line break-words">{data}</p>
                   </div>
                 )}
                 <div className="flex flex-col md:flex md:flex-row">
                   {subject && subject.trim() !== "" && (
-                    <div className="flex gap-2  px-4 py-2 rounded-xl w-full md:w-1/3">
+                    <div className="flex gap-2  px-4 py-2 rounded-xl w-full md:w-1/3 text-black">
                       <p className="font-semibold">Subject:</p>
                       <p className=" ">{subject}</p>
                     </div>
                   )}
 
                   {description && description.trim() !== "" && (
-                    <div className="flex gap-2 px-4 py-2 rounded-xl w-full md:w-1/3">
+                    <div className="flex gap-2 px-4 py-2 rounded-xl w-full md:w-1/3 text-black">
                       <p className="font-semibold">Description:</p>
                       <p className=" ">{description}</p>
                     </div>
@@ -237,7 +253,7 @@ export default function Draft() {
 
               <button
                 onClick={deleteSecondRow}
-                className="text-red-400 text-lg items-center self-center hover:scale-105 transition cursor-pointer"
+                className="text-black text-lg items-center self-center hover:scale-105 transition cursor-pointer"
               >
                 <RiDeleteBin6Line />
               </button>

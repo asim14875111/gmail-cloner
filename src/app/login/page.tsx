@@ -69,6 +69,10 @@ export default function Login() {
       toast.error("Add email first");
       return;
     }
+    if (!auth) {
+      toast.error("Authentication service not initialized.");
+      return;
+    }
     try {
       await sendPasswordResetEmail(auth, email);
       console.log("Password reset link has been sent,kindly check your inbox");
@@ -95,8 +99,11 @@ export default function Login() {
         <input className="border" type="email" placeholder="email" />
         <input type="password" className="border" />
    </form> */}
-      <div className="bg-[#f0f3f8] h-[100vh]  pt-40">
-        <div className="flex flex-row gap-20 items-start bg-white py-20 pt-10 w-fit justify-self-center px-10 rounded-2xl self-center">
+   <div>
+
+ 
+      <div className="bg-[#f0f3f8] md:h-[100vh]  flex justify-center sm:px-4 sm:py-4">
+        <div className="flex flex-col md:flex md:flex-row gap-20 items-start bg-white py-20 pt-10 w-fit justify-self-center px-4 sm:px-10 sm:rounded-2xl self-center">
           <div className="flex flex-col">
             <Image className="w-12 pb-10" src={googleimg} alt="" />
             <h5 className="text-[34px] font-thin text-[#1f1f1f]">
@@ -117,7 +124,7 @@ export default function Login() {
                     value={email}
                     required
                     onChange={(e) => setEmail(e.target.value)}
-                    className="border rounded-md pl-4 py-2.5 w-full"
+                    className="border rounded-md pl-4 py-2.5 w-full text-gray-900 border-gray-900"
                   />
                   <input
                     type="password"
@@ -125,9 +132,9 @@ export default function Login() {
                     value={password}
                     required
                     onChange={(e) => setPassword(e.target.value)}
-                    className="border rounded-md mt-3 pl-4 py-2.5 w-full"
+                    className="border rounded-md mt-3 pl-4 py-2.5 w-full text-gray-900 border-gray-900"
                   />
-                  <div className="flex w-full pt-3 justify-between">
+                  <div className="flex w-full pt-3 justify-between items-center">
                     <a
                       className="text-[#0b57d0] hover:underline cursor-pointer font-semibold text-sm mt-2"
                       onClick={forgotemail}
@@ -167,6 +174,7 @@ export default function Login() {
           </div>
         </div>
       </div>
+        </div>
       <ToastContainer />
     </div>
   );

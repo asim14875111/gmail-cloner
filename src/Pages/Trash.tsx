@@ -38,8 +38,8 @@ export default function Trash() {
   localStorage.setItem("Deleted-item", JSON.stringify(updatedTrash));
   localStorage.setItem("Deleted-item-length", JSON.stringify(updatedTrash.length));
   // Remove from MasterData as well
-  const master = JSON.parse(localStorage.getItem("MasterData") || "[]");
-  const updatedMaster = master.filter((item: any) => !selectedIds.includes(item.id));
+  const master: Item[] = JSON.parse(localStorage.getItem("MasterData") || "[]");
+  const updatedMaster = master.filter((item: Item) => !selectedIds.includes(item.id));
   localStorage.setItem("MasterData", JSON.stringify(updatedMaster));
   setSelectedIds([]);
   setSelectAll(false);
@@ -104,7 +104,7 @@ export default function Trash() {
          {selectedIds.length > 0 && (
           <button
             onClick={deleteSelected}
-            className="text-red-500 text-xl cursor-pointer hover:scale-105 transition"
+            className="text-black text-xl cursor-pointer hover:scale-105 transition"
             title="Delete selected"
           >
             <RiDeleteBin6Line />
@@ -138,7 +138,7 @@ export default function Trash() {
                 />
                 <div
                   onClick={() => showDetailsSection(item)}
-                  className="flex flex-col items-start gap-1 flex-1 cursor-pointer"
+                  className="flex flex-col items-start gap-1 text-gray-800 flex-1 cursor-pointer"
                 >
                   <h5 className="font-semibold">{item.title}</h5>
                   <p className="line-clamp-1 text-gray-700 text-sm text-start">
@@ -153,21 +153,21 @@ export default function Trash() {
         )}
 
          {selectedItem && (
-          <div className="p-4 border-t mt-0 bg-[#00000075] pt-40 fixed inset-0 shadow">
+          <div className="flex justify-center p-4 border-t mt-0 bg-[#00000075]  fixed inset-0 shadow">
             <div className="self-center">
               <div
                 ref={Divref}
-                className="bg-white px-6 py-4 flex rounded-md justify-self-center"
+                className="bg-white px-6 py-4 flex rounded-md w-[400px] justify-self-center"
               >
-                <div className="w-fit">
+                <div className="w-full">
                   <div className="flex flex-col text-start">
-                    <p className="font-semibold">Subject:</p>
+                    <p className="font-semibold text-black">Subject:</p>
                     <p className="text-sm text-gray-600">
                       {selectedItem.title}
                     </p>
                   </div>
                   <div className="flex w-fit flex-col">
-                    <p className="font-semibold text-start pt-4">
+                    <p className="font-semibold text-start text-black pt-4">
                       Description:
                     </p>
                     <p className="text-start max-w-[400px] text-sm text-gray-600">
@@ -176,7 +176,7 @@ export default function Trash() {
                   </div>
                   <button
                     onClick={closeDetailsSection}
-                    className="mt-8 px-4 py-2 bg-gray-200 w-full cursor-pointer rounded hover:bg-gray-300"
+                    className="mt-8 px-4 py-2 bg-gray-200 w-full text-black cursor-pointer rounded hover:bg-gray-300"
                   >
                     Close
                   </button>

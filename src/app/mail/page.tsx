@@ -259,10 +259,10 @@ export default function Inboxpage() {
   return (
     <>
       {logout && (
-        <div className="fixed bg-[#0000008a] inset-0 z-10 justify-self-center w-full">
+        <div className="flex justify-center fixed bg-[#0000008a] inset-0 z-10 justify-self-center w-full">
           <div
             ref={divref}
-            className="bg-white justify-self-center self-center mt-50 px-4 w-[315px] sm:w-[400px] rounded-xl py-3"
+            className="bg-white justify-self-center self-center px-4 w-[315px] sm:w-[400px] rounded-xl py-3"
           >
             <div className="pb-4 pt-1">
               <p className=" text-2xl pb-3 text-center font-medium text-gray-900">
@@ -318,7 +318,7 @@ export default function Inboxpage() {
                   <input
                     value={inputvalue}
                     onChange={handletitle}
-                    className="border-b border-gray-200 outline-0 placeholder:text-sm w-full"
+                    className="border-b border-gray-200 outline-0 placeholder:text-gray-700 text-black placeholder:text-sm w-full"
                     type="text"
                     placeholder="To:"
                   />
@@ -327,7 +327,7 @@ export default function Inboxpage() {
                   <input
                     value={subjectvalue}
                     onChange={handlesubject}
-                    className="border-b border-gray-200 outline-0 placeholder:text-sm w-full"
+                    className="border-b border-gray-200 outline-0 placeholder:text-gray-700 text-black placeholder:text-sm w-full"
                     type="text"
                     placeholder="Subject"
                   />
@@ -337,7 +337,7 @@ export default function Inboxpage() {
                 <input
                   value={descriptionvalue}
                   onChange={handledescription}
-                  className="border-b border-gray-200 w-full mt-10 outline-0"
+                  className="border-b border-gray-200 w-full placeholder:text-gray-700 text-black mt-10 outline-0"
                   type="text"
                   placeholder="Description"
                 />
@@ -415,7 +415,7 @@ export default function Inboxpage() {
           <div>
             <button
               onClick={logoutgmail}
-              className="bg-blue-900 cursor-pointer hover:bg-blue-800 hover:scale-105 py-[3px] transition text-white px-2.5 rounded-full"
+              className="bg-blue-900 cursor-pointer hover:bg-blue-800 hover:scale-105 py-[2px] transition text-white px-2 rounded-full"
             >
               {gettingmail}
             </button>
@@ -423,10 +423,10 @@ export default function Inboxpage() {
         </div>
       </div>
 
-      <div className="flex flex-col sm:flex sm:flex-row">
+      <div className="flex flex-col sm:flex sm:flex-row h-[100vh]">
         <div
           style={{ justifyContent: "start" }}
-          className="w-full flex flex-col-reverse bg-[#f9fafe] sm:w-fit sm:h-[90vh]"
+          className="w-full flex flex-col-reverse bg-white border-r  sm:w-fit sm:min-h-[90vh]"
         >
           <div className="flex flex-col w-full sm:w-fit pb-2 sm:pb-0 gap-2 pr-4 pt-4">
             {sidebarcomponents.map((item: Item, index) => (
@@ -443,7 +443,7 @@ export default function Inboxpage() {
                 className="flex items-center justify-between cursor-pointer pl-7 pr-2 active:bg-blue-200 py-1.5 rounded-r-xl gap-6 hover:bg-gray-200"
               >
                 <div className="flex gap-2">
-                  <div className="text-xl">{item.icon}</div>
+                  <div className="text-xl text-black">{item.icon}</div>
                   {visible && (
                     <p className="text-sm text-gray-500 w-40 font-semibold">
                       {item.title}
@@ -452,23 +452,31 @@ export default function Inboxpage() {
                 </div>
                 <div>
                   {index === 0 && (
-                    <p className="font-semibold pr-2">{loaddata || 0}</p>
+                    <p className="font-semibold pr-2 text-black">
+                      {loaddata || 0}
+                    </p>
                   )}
                   {index === 1 && (
-                    <p className="font-semibold pr-2">{archiveData || 0}</p>
+                    <p className="font-semibold pr-2 text-black">
+                      {archiveData || 0}
+                    </p>
                   )}
                   {index === 2 && (
-                    <p className="font-semibold pr-2">{sentLength || 0}</p>
+                    <p className="font-semibold pr-2 text-black">
+                      {sentLength || 0}
+                    </p>
                   )}
                   {index === 3 && (
-                    <p className="font-semibold pr-2">
+                    <p className="font-semibold pr-2 text-black">
                       {Number(draftLength) === 0 && Number(getteddata) === 0
                         ? 0
                         : Number(draftLength) + Number(getteddata || 0)}
                     </p>
                   )}
                   {index === 4 && (
-                    <p className="font-semibold pr-2">{trashData || 0}</p>
+                    <p className="font-semibold pr-2 text-black">
+                      {trashData || 0}
+                    </p>
                   )}
                 </div>
               </div>
@@ -477,7 +485,7 @@ export default function Inboxpage() {
           <div className="px-4 flex justify-self-center justify-center pt-4 w-full">
             <p
               onClick={showcomposesection}
-              className="bg-[#c3e7ff] flex gap-2 items-center w-full px-3 py-3 cursor-pointer hover:bg-[#b2d4eb] hover:scale-101 transition rounded-xl"
+              className="bg-[#c3e7ff] flex gap-2 items-center w-full px-3 py-3 text-black cursor-pointer hover:bg-[#b2d4eb] hover:scale-101 transition rounded-xl"
             >
               <FaPen />
               {visible && (
@@ -488,7 +496,7 @@ export default function Inboxpage() {
             </p>
           </div>
         </div>
-        <div className="w-full">
+        <div className="w-full bg-white">
           <div className="w-full">
             {buttonscontent.map(
               (button: Button, index) =>

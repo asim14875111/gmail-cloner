@@ -107,7 +107,7 @@ export default function Archive() {
         {selectedIds.length > 0 && (
           <button
             onClick={deleteSelected}
-            className="text-red-500 text-xl cursor-pointer hover:scale-105 transition"
+            className="text-black text-xl cursor-pointer hover:scale-105 transition"
             title="Delete selected"
           >
             <RiDeleteBin6Line />
@@ -116,7 +116,7 @@ export default function Archive() {
         {/* </div> */}
       </div>
 
-      <div className="w-full flex flex-col gap-4 h-[80vh] overflow-auto px-6 pt-6 pb-10">
+      <div className="w-full flex flex-col gap-4 h-[80vh] overflow-auto px-6 bg-white pt-6 pb-10">
         {visible && archive.length > 0 ? (
           <div className="flex flex-col gap-5">
             {archive.map((item) => {
@@ -125,7 +125,7 @@ export default function Archive() {
                 <div
                   key={item.id}
                   onClick={() => showDetailsSection(item)}
-                  className="flex flex-row justify-between  hover:bg-gray-200  transition items-center py-2 px-2 border rounded-xl border-gray-200 bg-gray-50 cursor-pointer"
+                  className="flex flex-row justify-between  hover:bg-gray-200  transition items-start py-2 px-2 border rounded-xl border-gray-200 bg-gray-50 cursor-pointer"
                 >
                   <div>
                     <input
@@ -135,12 +135,12 @@ export default function Archive() {
                         e.stopPropagation();
                         toggleSelect(item.id);
                       }}
-                      className="cursor-pointer"
+                      className="cursor-pointer mt-2"
                     />
                   </div>
-                  <div className="flex flex-col pl-4 items-start gap-1 flex-1">
-                    <h5 className="font-semibold">{item.title}</h5>
-                    <p className="line-clamp-1 text-gray-700 text-sm text-start">
+                  <div className="flex flex-col pl-4 items-start gap-1 flex-1 text-black">
+                    <h5 className="font-semibold text-black">{item.title}</h5>
+                    <p className="line-clamp-1 text-gray-800 text-sm text-start">
                       {item.description}
                     </p>
                   </div>
@@ -161,13 +161,13 @@ export default function Archive() {
               >
                 <div className="w-fit">
                   <div className="flex flex-col text-start">
-                    <p className="font-semibold">Subject:</p>
+                    <p className="font-semibold text-black">Subject:</p>
                     <p className="text-sm text-gray-600">
                       {selectedItem.title}
                     </p>
                   </div>
                   <div className="flex w-fit flex-col">
-                    <p className="font-semibold text-start pt-4">
+                    <p className="font-semibold text-start pt-4 text-black">
                       Description:
                     </p>
                     <p className="text-start max-w-[400px] text-sm text-gray-600">
@@ -176,7 +176,7 @@ export default function Archive() {
                   </div>
                   <button
                     onClick={closeDetailsSection}
-                    className="mt-8 px-4 py-2 bg-gray-200 w-full cursor-pointer rounded hover:bg-gray-300"
+                    className="mt-8 px-4 py-2 bg-gray-200 w-full cursor-pointer text-black rounded hover:bg-gray-300"
                   >
                     Close
                   </button>
