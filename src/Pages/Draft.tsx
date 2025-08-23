@@ -10,16 +10,13 @@ export default function Draft() {
   const [visible, setIsVisible] = useState(true);
 
   useEffect(() => {
-    // const interval = setInterval(() => {
-    setDraftEmail(localStorage.getItem("draft-email"));
+     setDraftEmail(localStorage.getItem("draft-email"));
     setTitle(localStorage.getItem("title-subject"));
     setData(localStorage.getItem("compose-draft-title"));
     setSubject(localStorage.getItem("compose-subject"));
     setDescription(localStorage.getItem("compose-description"));
     setFounder(localStorage.getItem("draft-founder"));
-    // }, 200);
-    // return () => clearInterval(interval);
-  }, []);
+   }, []);
 
   const updateDraftLength = () => {
     let count = 0;
