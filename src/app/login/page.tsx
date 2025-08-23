@@ -1,3 +1,4 @@
+"use client";
 interface AuthError {
   code: string;
   message?: string;
@@ -11,14 +12,13 @@ function isAuthError(err: unknown): err is AuthError {
     typeof (err as { code: unknown }).code === "string"
   );
 }
-"use client";
 import React, { useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/firebaseConfig";
 import Link from "next/link";
 import { ToastContainer, toast } from "react-toastify";
 import Image from "next/image";
-import googleimg from "../../assets/images/google-icon.svg";
+import googleimg from "../../assests/images/google-icon.svg";
 import { useRouter } from "next/navigation";
 import { sendPasswordResetEmail } from "firebase/auth";
 
