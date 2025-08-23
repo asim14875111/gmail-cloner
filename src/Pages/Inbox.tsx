@@ -17,6 +17,8 @@ import { initialdata } from "@/Componets/initialdata";
 // import { MyContext } from "../Components/MyContext";
 // import { createContext } from "vm";
 // import unread from "./unreatd";
+
+
 export default function Inbox() {
   // const initialdata = initialdata
   const [visible, setIsVisible] = useState<boolean>(false);
@@ -58,7 +60,7 @@ export default function Inbox() {
   useEffect(() => {
     const read = JSON.parse(localStorage.getItem("read-item") || "[]");
     setReadItems(read.map((item: Item) => item.id));
-  }, [data]);
+  }, [data, data.length]);
 
   const [filterUsers, setFilteredUsers] = useState(initialdata);
 
@@ -93,14 +95,7 @@ export default function Inbox() {
       });
       localStorage.setItem("Archived-item", JSON.stringify(getdata));
     }
-
-    // Remove from MasterData
-    const master = JSON.parse(localStorage.getItem("MasterData") || "[]");
-    const updatedMaster = master.filter((d: Item) => d.id !== item.id);
-    localStorage.setItem("MasterData", JSON.stringify(updatedMaster));
-
-    setData((prev) => prev.filter((d) => d.id !== item.id));
-
+    // Do not remove from MasterData when archiving
     if (currentIndex === item.id) {
       setCurrentIndex(0);
       setIsVisible(false);
@@ -119,7 +114,7 @@ export default function Inbox() {
       });
       localStorage.setItem("Deleted-item", JSON.stringify(getdata));
     }
-
+    // Remove from MasterData when deleting
     const master = JSON.parse(localStorage.getItem("MasterData") || "[]");
     const updatedMaster = master.filter((d: Item) => d.id !== item.id);
     localStorage.setItem("MasterData", JSON.stringify(updatedMaster));
@@ -840,7 +835,7 @@ export default function Inbox() {
                       item.id === currentIndex && (
                         <div key={item.id}>
                           <div className="flex flex-col justify-between h-[71vh]">
-                            {" "}
+                         {" "}
                             <div>
                               <div>
                                 <p className="text-2xl font-semibold">

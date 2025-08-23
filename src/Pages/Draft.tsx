@@ -10,13 +10,16 @@ export default function Draft() {
   const [visible, setIsVisible] = useState(true);
 
   useEffect(() => {
-     setDraftEmail(localStorage.getItem("draft-email"));
+    // const interval = setInterval(() => {
+    setDraftEmail(localStorage.getItem("draft-email"));
     setTitle(localStorage.getItem("title-subject"));
     setData(localStorage.getItem("compose-draft-title"));
     setSubject(localStorage.getItem("compose-subject"));
     setDescription(localStorage.getItem("compose-description"));
     setFounder(localStorage.getItem("draft-founder"));
-   }, []);
+    // }, 200);
+    // return () => clearInterval(interval);
+  }, []);
 
   const updateDraftLength = () => {
     let count = 0;
@@ -45,7 +48,37 @@ export default function Draft() {
   };
 
   const cleardraft = (): void => {
+    // Move all drafts to Trash before clearing
+    const deletedItems = JSON.parse(localStorage.getItem("Deleted-item") || "[]");
+    let itemsToDelete = [];
+    if (
+      (title && title.trim() !== "") ||
+      (founder && founder.trim() !== "") ||
+      (draft && draft.trim() !== "")
+    ) {
+      itemsToDelete.push({
+        id: Date.now(),
+        title: title || "",
+        description: draft || "",
+      });
+    }
+    if (
+      (data && data.trim() !== "") ||
+      (subject && subject.trim() !== "") ||
+      (description && description.trim() !== "")
+    ) {
+      itemsToDelete.push({
+        id: Date.now() + 1,
+        title: data || "",
+        description: description || "",
+      });
+    }
+    const updatedDeleted = [...deletedItems, ...itemsToDelete];
+    localStorage.setItem("Deleted-item", JSON.stringify(updatedDeleted));
+    localStorage.setItem("Deleted-item-length", JSON.stringify(updatedDeleted.length));
+
     localStorage.setItem("draft-length-compose", "0");
+    localStorage.removeItem("draft-email-compose");
 
     setIsVisible(false);
     setTitle(null);
@@ -66,25 +99,49 @@ export default function Draft() {
   };
 
   const deleteFirstRow = () => {
-    setTitle(null);
-    setFounder(null);
-    setDraftEmail(null);
+    // Move to Trash
+    const deletedItems = JSON.parse(localStorage.getItem("Deleted-item") || "[]");
+    const itemToDelete = {
+      id: Date.now(),
+      title: title || "",
+      description: draft || "",
+    };
+    const updatedDeleted = [...deletedItems, itemToDelete];
+    localStorage.setItem("Deleted-item", JSON.stringify(updatedDeleted));
+    localStorage.setItem("Deleted-item-length", JSON.stringify(updatedDeleted.length));
 
-    localStorage.removeItem("title-subject");
-    localStorage.removeItem("draft-founder");
-    localStorage.removeItem("draft-email");
-    updateDraftLength();
+  setTitle(null);
+  setFounder(null);
+  setDraftEmail(null);
+  localStorage.removeItem("draft-email-compose");
+
+  localStorage.removeItem("title-subject");
+  localStorage.removeItem("draft-founder");
+  localStorage.removeItem("draft-email");
+  localStorage.setItem("draft-length-compose", "0");
+  updateDraftLength();
   };
 
   const deleteSecondRow = () => {
-    setData(null);
-    setSubject(null);
-    setDescription(null);
+     const deletedItems = JSON.parse(localStorage.getItem("Deleted-item") || "[]");
+    const itemToDelete = {
+      id: Date.now(),
+      title: data || "",
+      description: description || "",
+    };
+    const updatedDeleted = [...deletedItems, itemToDelete];
+    localStorage.setItem("Deleted-item", JSON.stringify(updatedDeleted));
+    localStorage.setItem("Deleted-item-length", JSON.stringify(updatedDeleted.length));
 
-    localStorage.removeItem("compose-draft-title");
-    localStorage.removeItem("compose-subject");
-    localStorage.removeItem("compose-description");
-    updateDraftLength();
+  setData(null);
+  setSubject(null);
+  setDescription(null);
+  localStorage.removeItem("draft-email-compose");
+
+  localStorage.removeItem("compose-draft-title");
+  localStorage.removeItem("compose-subject");
+  localStorage.removeItem("compose-description");
+  updateDraftLength();
   };
 
   const hasFirstRow =

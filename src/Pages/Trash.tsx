@@ -10,9 +10,6 @@ interface Item {
 
 export default function Trash() {
   const [data, setData] = useState<Item[]>([]);
-  const [deletedDataFromArchive, setDeletedDataFromArchive] = useState<Item[]>(
-    []
-  );
   const [selectedItem, setSelectedItem] = useState<Item | null>(null);
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
   const [selectAll, setSelectAll] = useState(false);
@@ -23,63 +20,32 @@ export default function Trash() {
       localStorage.getItem("Deleted-item") || "[]"
     );
     setData(deletedFromTrash);
-
-    const deletedFromArchive: Item[] = JSON.parse(
-      localStorage.getItem("Archived-item") || "[]"
-    );
-    setDeletedDataFromArchive(deletedFromArchive);
-
-    const total = deletedFromTrash.length + deletedFromArchive.length;
-    localStorage.setItem("Deleted-item-length", JSON.stringify(total));
+    localStorage.setItem("Deleted-item-length", JSON.stringify(deletedFromTrash.length));
   }, []);
 
   const clearTrash = (): void => {
-    setData([]);
-    setDeletedDataFromArchive([]);
-    localStorage.setItem("Deleted-item", JSON.stringify([]));
-    localStorage.setItem("Data", JSON.stringify([]));
-    localStorage.setItem("Deleted-item-length", JSON.stringify(0));
-    setSelectedItem(null);
-    setSelectedIds([]);
-    setSelectAll(false);
+  setData([]);
+  localStorage.setItem("Deleted-item", JSON.stringify([]));
+  localStorage.setItem("Deleted-item-length", JSON.stringify(0));
+  setSelectedItem(null);
+  setSelectedIds([]);
+  setSelectAll(false);
   };
 
   const deleteSelected = (): void => {
-    const updatedTrash = data.filter((item) => !selectedIds.includes(item.id));
-    const updatedArchive = deletedDataFromArchive.filter(
-      (item) => !selectedIds.includes(item.id)
-    );
-      const masterData: Item[] = JSON.parse(
-    localStorage.getItem("MasterData") || "[]"
-  );
-  const updatedMasterData = masterData.filter(
-    (item) => !selectedIds.includes(item.id)
-  );
-  localStorage.setItem("MasterData", JSON.stringify(updatedMasterData));
-
-    const inboxData: Item[] = JSON.parse(
-      localStorage.getItem("Inbox-data") || "[]"
-    );
-    const updatedInbox = inboxData.filter(
-      (item) => !selectedIds.includes(item.id)
-    );
-    localStorage.setItem("Inbox-data", JSON.stringify(updatedInbox));
-
-    setData(updatedTrash);
-    setDeletedDataFromArchive(updatedArchive);
-
-    localStorage.setItem("Deleted-item", JSON.stringify(updatedTrash));
-    localStorage.setItem("Archived-item", JSON.stringify(updatedArchive));
-
-
-    const total = updatedTrash.length + updatedArchive.length;
-    localStorage.setItem("Deleted-item-length", JSON.stringify(total));
-
-    setSelectedIds([]);
-    setSelectAll(false);
-    if (selectedItem && selectedIds.includes(selectedItem.id)) {
-      setSelectedItem(null);
-    }
+  const updatedTrash = data.filter((item) => !selectedIds.includes(item.id));
+  setData(updatedTrash);
+  localStorage.setItem("Deleted-item", JSON.stringify(updatedTrash));
+  localStorage.setItem("Deleted-item-length", JSON.stringify(updatedTrash.length));
+  // Remove from MasterData as well
+  const master = JSON.parse(localStorage.getItem("MasterData") || "[]");
+  const updatedMaster = master.filter((item: any) => !selectedIds.includes(item.id));
+  localStorage.setItem("MasterData", JSON.stringify(updatedMaster));
+  setSelectedIds([]);
+  setSelectAll(false);
+  if (selectedItem && selectedIds.includes(selectedItem.id)) {
+    setSelectedItem(null);
+  }
   };
 
   const showDetailsSection = (item: Item): void => {
@@ -105,8 +71,8 @@ export default function Trash() {
     }
   }, [selectedItem]);
 
-  const hasData = data.length > 0 || deletedDataFromArchive.length > 0;
-  const allItems = [...data, ...deletedDataFromArchive];
+  const hasData = data.length > 0;
+  const allItems = [...data];
 
   const handleSelectAll = () => {
     if (selectAll) {
@@ -127,8 +93,7 @@ export default function Trash() {
 
   return (
     <div>
-      {/* Header with main checkbox + delete */}
-      <div className="flex justify-between px-6 items-center py-2 bg-gray-50 border-t border-b border-gray-200">
+       <div className="flex justify-between px-6 items-center py-2 bg-gray-50 border-t border-b border-gray-200">
         <input
           type="checkbox"
           checked={selectAll}
@@ -136,8 +101,7 @@ export default function Trash() {
           onChange={handleSelectAll}
           className="cursor-pointer w-4 h-4"
         />
-        {/* Show delete icon at top if one or more selected */}
-        {selectedIds.length > 0 && (
+         {selectedIds.length > 0 && (
           <button
             onClick={deleteSelected}
             className="text-red-500 text-xl cursor-pointer hover:scale-105 transition"
@@ -188,8 +152,7 @@ export default function Trash() {
           <p className="text-gray-500 text-center mt-6">Trash is empty</p>
         )}
 
-        {/* Details modal */}
-        {selectedItem && (
+         {selectedItem && (
           <div className="p-4 border-t mt-0 bg-[#00000075] pt-40 fixed inset-0 shadow">
             <div className="self-center">
               <div

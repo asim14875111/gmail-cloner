@@ -16,37 +16,44 @@ export default function Archive() {
     description: string;
   }
 
- useEffect(() => {
-  const fromArchived = JSON.parse(localStorage.getItem("Archived-item") || "[]");
-  setArchive(fromArchived);
-}, []);
-const deleteSelected = (): void => {
-  const updated = archive.filter((item) => !selectedIds.includes(item.id));
+  useEffect(() => {
+    const fromArchived = JSON.parse(
+      localStorage.getItem("Archived-item") || "[]"
+    );
+    setArchive(fromArchived);
+  }, []);
+  const deleteSelected = (): void => {
+    const updated = archive.filter((item) => !selectedIds.includes(item.id));
 
-   const deletedItems = JSON.parse(localStorage.getItem("Deleted-item") || "[]");
-  const itemsToDelete = archive.filter((item) => selectedIds.includes(item.id));
-  const updatedDeleted = [...deletedItems, ...itemsToDelete];
-  localStorage.setItem("Deleted-item", JSON.stringify(updatedDeleted));
+    const deletedItems = JSON.parse(
+      localStorage.getItem("Deleted-item") || "[]"
+    );
+    const itemsToDelete = archive.filter((item) =>
+      selectedIds.includes(item.id)
+    );
+    const updatedDeleted = [...deletedItems, ...itemsToDelete];
+    localStorage.setItem("Deleted-item", JSON.stringify(updatedDeleted));
+    localStorage.setItem("Deleted-item-length", JSON.stringify(updatedDeleted.length));
 
-   const updatedData = JSON.parse(localStorage.getItem("Data") || "[]").filter(
-    (item: Item) => !selectedIds.includes(item.id)
-  );
-  const updatedArchived = JSON.parse(
-    localStorage.getItem("Archived-item") || "[]"
-  ).filter((item: Item) => !selectedIds.includes(item.id));
+    const updatedData = JSON.parse(localStorage.getItem("Data") || "[]").filter(
+      (item: Item) => !selectedIds.includes(item.id)
+    );
+    const updatedArchived = JSON.parse(
+      localStorage.getItem("Archived-item") || "[]"
+    ).filter((item: Item) => !selectedIds.includes(item.id));
 
-  localStorage.setItem("Data", JSON.stringify(updatedData));
-  localStorage.setItem("Archived-item", JSON.stringify(updatedArchived));
-  localStorage.setItem("Length-of-archive", updated.length.toString());
+    localStorage.setItem("Data", JSON.stringify(updatedData));
+    localStorage.setItem("Archived-item", JSON.stringify(updatedArchived));
+    localStorage.setItem("Length-of-archive", updated.length.toString());
 
-  setArchive(updated);
-  setSelectedIds([]);
-  setSelectAll(false);
+    setArchive(updated);
+    setSelectedIds([]);
+    setSelectAll(false);
 
-  if (selectedItem && selectedIds.includes(selectedItem.id)) {
-    setSelectedItem(null);
-  }
-};
+    if (selectedItem && selectedIds.includes(selectedItem.id)) {
+      setSelectedItem(null);
+    }
+  };
 
   const toggleSelect = (id: number) => {
     setSelectedIds((prev) =>
@@ -89,23 +96,23 @@ const deleteSelected = (): void => {
 
   return (
     <div>
-       <div className="flex justify-between px-6 items-center py-2 bg-gray-50 border-t border-b border-gray-200">
+      <div className="flex justify-between px-6 items-center py-2 bg-gray-50 border-t border-b border-gray-200">
         {/* <div className="flex items-center gap-2"> */}
-          <input
-            type="checkbox"
-            checked={selectAll}
-            onChange={handleSelectAll}
-            className="cursor-pointer"
-          />
-           {selectedIds.length > 0 && (
-            <button
-              onClick={deleteSelected}
-              className="text-red-500 text-xl cursor-pointer hover:scale-105 transition"
-              title="Delete selected"
-            >
-              <RiDeleteBin6Line />
-            </button>
-          )}
+        <input
+          type="checkbox"
+          checked={selectAll}
+          onChange={handleSelectAll}
+          className="cursor-pointer"
+        />
+        {selectedIds.length > 0 && (
+          <button
+            onClick={deleteSelected}
+            className="text-red-500 text-xl cursor-pointer hover:scale-105 transition"
+            title="Delete selected"
+          >
+            <RiDeleteBin6Line />
+          </button>
+        )}
         {/* </div> */}
       </div>
 
@@ -145,7 +152,7 @@ const deleteSelected = (): void => {
           <p className="text-gray-500 text-center mt-6">Archive is empty</p>
         )}
 
-         {selectedItem && (
+        {selectedItem && (
           <div className="p-4 border-t mt-0 bg-[#00000075] pt-40 fixed inset-0 shadow">
             <div className="self-center">
               <div

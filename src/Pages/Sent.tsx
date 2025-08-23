@@ -45,17 +45,28 @@ export default function Sent() {
   }, []);
 
   const deleteSimpleRow = (index: number) => {
+    // Move to Trash
+    const deletedItems = JSON.parse(localStorage.getItem("Deleted-item") || "[]");
+    const itemToDelete = {
+      id: Date.now(),
+      title: title[index] || "",
+      description: sentmails[index] || "",
+    };
+    const updatedDeleted = [...deletedItems, itemToDelete];
+    localStorage.setItem("Deleted-item", JSON.stringify(updatedDeleted));
+    localStorage.setItem("Deleted-item-length", JSON.stringify(updatedDeleted.length));
+
     const updatedTitle = title.filter((_, i) => i !== index);
     const updatedSubject = subject.filter((_, i) => i !== index);
-    const updatedSent = sentmails.filter((_, i) => i !== index);
+    const updatedSentMails = sentmails.filter((_, i) => i !== index);
 
     setTitle(updatedTitle);
     setSubject(updatedSubject);
-    setSentMails(updatedSent);
+    setSentMails(updatedSentMails);
 
     localStorage.setItem("title", JSON.stringify(updatedTitle));
     localStorage.setItem("founder", JSON.stringify(updatedSubject));
-    localStorage.setItem("Sent-value", JSON.stringify(updatedSent));
+    localStorage.setItem("Sent-value", JSON.stringify(updatedSentMails));
 
     setSelectedSimple((prev) => prev.filter((i) => i !== index));
     const updatedCompose = JSON.parse(
@@ -63,11 +74,22 @@ export default function Sent() {
     );
     localStorage.setItem(
       "sent-length",
-      JSON.stringify(updatedSent.length + updatedCompose.length)
+      JSON.stringify(updatedSentMails.length + updatedCompose.length)
     );
   };
 
   const deleteComposeRow = (index: number) => {
+    // Move to Trash
+    const deletedItems = JSON.parse(localStorage.getItem("Deleted-item") || "[]");
+    const itemToDelete = {
+      id: Date.now(),
+      title: composedata[index]?.receivername || "",
+      description: composedata[index]?.description || "",
+    };
+    const updatedDeleted = [...deletedItems, itemToDelete];
+    localStorage.setItem("Deleted-item", JSON.stringify(updatedDeleted));
+    localStorage.setItem("Deleted-item-length", JSON.stringify(updatedDeleted.length));
+
     const updatedSent = JSON.parse(localStorage.getItem("Sent-value") || "[]");
     const updatedCompose = composedata.filter((_, i) => i !== index);
     localStorage.setItem(
@@ -105,6 +127,24 @@ export default function Sent() {
   };
 
   const deleteSelected = () => {
+    // Move selected to Trash
+    const deletedItems = JSON.parse(localStorage.getItem("Deleted-item") || "[]");
+    const itemsToDelete = [
+      ...selectedSimple.map((i) => ({
+        id: Date.now() + i,
+        title: title[i] || "",
+        description: sentmails[i] || "",
+      })),
+      ...selectedCompose.map((i) => ({
+        id: Date.now() + i,
+        title: composedata[i]?.receivername || "",
+        description: composedata[i]?.description || "",
+      })),
+    ];
+    const updatedDeleted = [...deletedItems, ...itemsToDelete];
+    localStorage.setItem("Deleted-item", JSON.stringify(updatedDeleted));
+    localStorage.setItem("Deleted-item-length", JSON.stringify(updatedDeleted.length));
+
     const updatedTitle = title.filter((_, i) => !selectedSimple.includes(i));
     const updatedSubject = subject.filter((_, i) => !selectedSimple.includes(i));
     const updatedSent = sentmails.filter((_, i) => !selectedSimple.includes(i));

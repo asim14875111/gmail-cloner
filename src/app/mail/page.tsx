@@ -44,7 +44,8 @@ export default function Inboxpage() {
   const [trashData, setTrashData] = useState<string | null>(null);
   const [sentLength, setSentLength] = useState("0");
   const [draftLength, setDraftLength] = useState("0");
-  const [getteddata, setGetteddata] = useState<string | null>(null);
+  const [getteddata, setGetteddata] = useState<string | null>("0");
+  const [composeFp, setComposeFp] = useState<string>("");
 
   const [gettingmail, setGettingmail] = useState<string | null>(null);
   const [logout, setLogout] = useState<boolean>(false);
@@ -108,17 +109,21 @@ export default function Inboxpage() {
       description: descriptionvalue,
     };
 
-    if (typeof window !== "undefined") {
-      const savedvalue = JSON.parse(
-        localStorage.getItem("compose-data") || "[]"
-      );
-      savedvalue.push(data);
-      localStorage.setItem("compose-data", JSON.stringify(savedvalue));
-      localStorage.setItem("sent-length", savedvalue.length.toString());
+    // if (typeof window !== "undefined") {
+    const savedvalue = JSON.parse(localStorage.getItem("compose-data") || "[]");
+    savedvalue.push(data);
+    localStorage.setItem("compose-data", JSON.stringify(savedvalue));
+    localStorage.setItem("sent-length", savedvalue.length.toString());
 
-      const drafts = JSON.parse(localStorage.getItem("draft-data") || "[]");
-      localStorage.setItem("draft-length", drafts.length.toString());
-    }
+    const drafts = JSON.parse(localStorage.getItem("draft-data") || "[]");
+    localStorage.setItem("draft-length", drafts.length.toString());
+
+    localStorage.removeItem("compose-draft-title");
+    localStorage.removeItem("compose-subject");
+    localStorage.removeItem("compose-description");
+    localStorage.removeItem("draft-email-compose");
+    localStorage.setItem("draft-length-compose", "0");
+    // }
 
     setInputValue("");
     setDescriptionValue("");
@@ -164,9 +169,8 @@ export default function Inboxpage() {
 
   const handleButtonClick = (id: number) => setSelectedButtonId(id);
 
-  // keep state synced with localStorage
   useEffect(() => {
-    const interval = setInterval(() => {
+    const updateStateFromStorage = () => {
       if (typeof window !== "undefined") {
         setLoadData(localStorage.getItem("Length-of-data"));
         setArchiveData(localStorage.getItem("Length-of-archive"));
@@ -174,26 +178,47 @@ export default function Inboxpage() {
         setTrashData(localStorage.getItem("Deleted-item-length"));
         setSentLength(localStorage.getItem("sent-length") || "0");
         setDraftLength(localStorage.getItem("draft-length") || "0");
-        setGetteddata(localStorage.getItem("draft-length-compose"));
-      }
-    }, 500);
 
-    return () => clearInterval(interval);
+        const title = localStorage.getItem("compose-draft-title") || "";
+        const subj = localStorage.getItem("compose-subject") || "";
+        const desc = localStorage.getItem("compose-description") || "";
+        const to = localStorage.getItem("draft-email-compose") || "";
+        const present = [title, subj, desc, to].some(
+          (v) => v && v.trim() !== ""
+        );
+        // If there are no drafts, set getteddata to "0"
+        const draftLengthValue = localStorage.getItem("draft-length") || "0";
+        if (draftLengthValue === "0" && !present) {
+          setGetteddata("0");
+        } else {
+          setGetteddata(present ? "1" : "0");
+        }
+        setComposeFp(`${title}|${subj}|${desc}|${to}`);
+      }
+    };
+
+    updateStateFromStorage();
+    const interval = setInterval(updateStateFromStorage, 500);
+
+    window.addEventListener("drafts-updated", updateStateFromStorage);
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener("drafts-updated", updateStateFromStorage);
+    };
   }, []);
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      if (inputvalue.trim() !== "") {
-        localStorage.setItem("draft-email-compose", inputvalue);
-        localStorage.setItem("draft-length-compose", "1");
-      } else {
-        localStorage.removeItem("draft-email-compose");
-        localStorage.setItem("draft-length-compose", "0");
-      }
+    // if (typeof window !== "undefined") {
+    if (inputvalue.trim() !== "") {
+      localStorage.setItem("draft-email-compose", inputvalue);
+      localStorage.setItem("draft-length-compose", "1");
+    } else {
+      localStorage.removeItem("draft-email-compose");
+      localStorage.setItem("draft-length-compose", "0");
     }
+    // }
   }, [inputvalue]);
 
-  // check if user is logged in
   useEffect(() => {
     if (typeof window !== "undefined") {
       const usermail = localStorage.getItem("mail");
@@ -265,7 +290,6 @@ export default function Inboxpage() {
         </div>
       )}
 
-      {/* Compose section */}
       {compose && (
         <div className="fixed bg-[#0000008a] z-50 w-full inset-0 bottom-0 justify-self-center">
           <div
@@ -351,9 +375,6 @@ export default function Inboxpage() {
                   <p className="text-lg hover:text-gray-900 cursor-pointer">
                     <FaGoogleDrive />
                   </p>
-                  {/* <p className="text-lg hover:text-gray-900 cursor-pointer">
-                    <FaPenAlt />
-                  </p> */}
                 </div>
               </div>
               <div className="cursor-pointer hover:text-gray-800">
@@ -441,7 +462,9 @@ export default function Inboxpage() {
                   )}
                   {index === 3 && (
                     <p className="font-semibold pr-2">
-                      {Number(draftLength) + Number(getteddata || 0)}
+                      {Number(draftLength) === 0 && Number(getteddata) === 0
+                        ? 0
+                        : Number(draftLength) + Number(getteddata || 0)}
                     </p>
                   )}
                   {index === 4 && (
@@ -470,7 +493,14 @@ export default function Inboxpage() {
             {buttonscontent.map(
               (button: Button, index) =>
                 index === currentIndex && (
-                  <div className="w-full" key={button.id}>
+                  <div
+                    className="w-full"
+                    key={
+                      button.value === "Drafts-button"
+                        ? `${button.id}-${draftLength}-${getteddata}-${composeFp}`
+                        : `${button.id}`
+                    }
+                  >
                     <span className="w-full">{button.label}</span>
                   </div>
                 )
