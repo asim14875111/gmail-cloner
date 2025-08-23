@@ -1,4 +1,6 @@
 "use client";
+export const dynamic = "force-dynamic";
+// ...existing code...
 import React, { useEffect, useRef } from "react";
 import { TbInbox } from "react-icons/tb";
 import { LuSendHorizontal } from "react-icons/lu";
