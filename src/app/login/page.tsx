@@ -49,7 +49,9 @@ export default function Login() {
             "Couldnot found any account with this email, kindly sign up"
           );
         } else {
-          toast.error("Couldnot found any account with this email and password");
+          toast.error(
+            "Couldnot found any account with this email and password"
+          );
         }
       } else {
         toast.error("An unknown error occurred");
