@@ -392,20 +392,20 @@ export default function Inboxpage() {
             </p>
           </div>
           <div>
-            <p
+            <button
               onClick={logoutgmail}
               className="bg-blue-900 cursor-pointer hover:bg-blue-800 hover:scale-105 py-[3px] transition text-white px-2.5 rounded-full"
             >
               {gettingmail}
-            </p>
+            </button>
           </div>
         </div>
       </div>
 
       <div className="flex flex-col sm:flex sm:flex-row">
         <div
-        style={{justifyContent:"start"}}
-           className="w-full flex flex-col-reverse bg-[#f9fafe] sm:w-fit sm:h-[90vh]"
+          style={{ justifyContent: "start" }}
+          className="w-full flex flex-col-reverse bg-[#f9fafe] sm:w-fit sm:h-[90vh]"
         >
           <div className="flex flex-col w-full sm:w-fit pb-2 sm:pb-0 gap-2 pr-4 pt-4">
             {sidebarcomponents.map((item: Item, index) => (
