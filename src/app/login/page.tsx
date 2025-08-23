@@ -17,7 +17,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/firebaseConfig";
 import Link from "next/link";
 import { ToastContainer, toast } from "react-toastify";
-import Image from "next/image";
+// import Image from "next/image";
 // import googleimg from "../../assets/images/google-icon.svg";
 import { useRouter } from "next/navigation";
 import { sendPasswordResetEmail } from "firebase/auth";

@@ -41,7 +41,7 @@ export default function Inboxpage() {
   const [selectedButtonId, setSelectedButtonId] = useState(1);
   const [loaddata, setloadData] = useState<string | null>(null);
   const [archiveData, setarchiveData] = useState<string | null>(null);
-  const [deletedData, setdeletedData] = useState<string | null>(null);
+  const [, setdeletedData] = useState<string | null>(null);
   const [trashData, setTrashData] = useState<string | null>(null);
   const [sentLength, setSentLength] = useState("0");
   const [draftLength, setDraftLength] = useState("0");
@@ -140,30 +140,29 @@ export default function Inboxpage() {
     setSubjectValue("");
   };
 
-const closecomposesection = (): void => {
-  const data = {
-    receivername: inputvalue,
-    subject: subjectvalue,
-    description: descriptionvalue,
-  };
+  const closecomposesection = (): void => {
+    const data = {
+      receivername: inputvalue,
+      subject: subjectvalue,
+      description: descriptionvalue,
+    };
 
-  console.log(data, "--Compose sent data");
+    console.log(data, "--Compose sent data");
 
-  const savedvalue = JSON.parse(localStorage.getItem("compose-data") || "[]");
-  savedvalue.push(data);
-  localStorage.setItem("compose-data", JSON.stringify(savedvalue));
+    const savedvalue = JSON.parse(localStorage.getItem("compose-data") || "[]");
+    savedvalue.push(data);
+    localStorage.setItem("compose-data", JSON.stringify(savedvalue));
 
-   localStorage.setItem("sent-length", savedvalue.length.toString());
+    localStorage.setItem("sent-length", savedvalue.length.toString());
 
-   const drafts = JSON.parse(localStorage.getItem("draft-data") || "[]");
-  localStorage.setItem("draft-length", drafts.length.toString());
+    const drafts = JSON.parse(localStorage.getItem("draft-data") || "[]");
+    localStorage.setItem("draft-length", drafts.length.toString());
 
     setInputValue("");
-  setDescriptionValue("");
-  setSubjectValue("");
-  setCompose(false);
-};
-
+    setDescriptionValue("");
+    setSubjectValue("");
+    setCompose(false);
+  };
 
   const handletitle = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setInputValue(event.target.value);
@@ -285,7 +284,7 @@ const closecomposesection = (): void => {
       setLogout(false);
     }
   };
-              
+
   useEffect(() => {
     if (logout) {
       window.addEventListener("mousedown", closedivonclickoutside);
