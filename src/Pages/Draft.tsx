@@ -177,9 +177,9 @@ export default function Draft() {
         {(hasFirstRow || hasSecondRow) && (
           <div
             onClick={cleardraft}
-            className="text-red-600 hover:scale-102 cursor-pointer transition"
+            className="text-black hover:scale-102 cursor-pointer transition"
           >
-            Clear draft
+            <RiDeleteBin6Line /> 
           </div>
         )}
       </div>

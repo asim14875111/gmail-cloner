@@ -135,7 +135,7 @@ export default function Archive() {
                         e.stopPropagation();
                         toggleSelect(item.id);
                       }}
-                      className="cursor-pointer mt-2"
+                      className="cursor-pointer mt-1"
                     />
                   </div>
                   <div className="flex flex-col pl-4 items-start gap-1 flex-1 text-black">
